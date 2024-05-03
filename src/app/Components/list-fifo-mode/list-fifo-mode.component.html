@@ -1,0 +1,19 @@
+<div style="padding: 30px">
+<form>
+    <div>
+      <label for="msgNum">Número de mensaje: </label>
+      <input
+        type="number"
+        id="msgNum"
+        name="name"
+        style="margin-left: 10px"
+        [(ngModel)]="msgNum"
+        placeholder="ej: 0"
+      />
+    </div>
+    <div>
+      <button (click)="insertMsgFifo(msgNum)">Insertar mensaje en fifo</button>
+      <p>{{ msgInsert }}</p>
+    </div>
+  </form>
+</div>

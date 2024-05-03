@@ -1,0 +1,42 @@
+<div class="container" style="margin-top: 50px;">
+  <div class="d-grid gap-2">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card border-primary mb-3">
+          <div class="card-header" style="text-align: center">MODO IMPRESIÓN</div>
+          <div class="card-body text-primary" style="text-align: center">
+            <button (click)="navigateToGeneralMode()" type="button" class="btn btn-outline-primary" >GENERAL</button>
+          </div>
+      
+        </div>
+      </div>
+  
+      <div class="col-md-3">
+        <div class="card border-primary mb-3">
+          <div class="card-header" style="text-align: center">MODO IMPRESIÓN</div>
+          <div class="card-body text-primary" style="text-align: center">
+              <button (click)="navigateToFifoMode()" type="button" class="btn btn-outline-primary" >FIFO</button>
+            </div>
+          </div>
+        </div>
+      <div class="col-md-3">
+        <div class="card border-primary mb-3">
+          <div class="card-header" style="text-align: center">MODO IMPRESIÓN</div>
+          <div class="card-body text-primary" style="text-align: center">
+            <button (click)="navigateToListMode()" type="button" class="btn btn-outline-primary" >LIST</button>         
+           </div>
+        </div>
+      </div>
+  
+      <div class="col-md-3">
+        <div class="card border-primary mb-3">
+          <div class="card-header" style="text-align: center">MODO IMPRESIÓN</div>
+          <div class="card-body text-primary" style="text-align: center">
+            <button (click)="navigateToListFifoMode()" type="button" class="btn btn-outline-primary" >LIST/FIFO</button>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <router-outlet></router-outlet>

@@ -1,0 +1,182 @@
+<div style="padding: 30px">
+  <button (click)="getStatus()">Estado programa impresora</button>
+  <p>{{ messageStatus }}</p>
+
+  <button (click)="stopPrinting()">Parar impresión</button>
+  <p>{{ messageStop }}</p>
+
+  <div class="btn-group dropend">
+    <button>Mostrar imagen cargada</button>
+
+    <button
+      type="button"
+      class="btn btn-secondary dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Color imagen
+    </button>
+    <ul class="dropdown-menu">
+      @for (color of colorTypesArray; track $index) {
+      <li>
+        <a (click)="visualizeImg(color[1])" class="dropdown-item">{{
+          color[0]
+        }}</a>
+      </li>
+      }
+      {{
+        messageImg
+      }}
+    </ul>
+    <img [src]="img" style="width: 100%; object-fit: cover" />
+  </div>
+</div>
+<div style="padding: 30px">
+  <button (click)="variablesAndValues()">
+    Mostrar variables de mensaje actual
+  </button>
+  @if(show == true) { @for(data of dataVariable ; track $index) {
+  <p>Nombre variable: {{ data.name }}</p>
+  <p>Valor de la variable: {{ data.value }}</p>
+
+  }
+  <p>{{ mssgVariable }}</p>
+  }
+</div>
+
+<div style="padding: 30px">
+  <button (click)="listMessages()">Listar mensajes del controlador</button>
+  @if(show == true){ @for(message of listMsg ; track message.id) {
+  <p>Número: {{ message.id }}</p>
+  <p>Archivo: {{ message.file }}</p>
+  } }
+</div>
+
+<div style="padding: 30px">
+  <form>
+    <div>
+      <label for="fileToDelete">Nombre del archivo*: </label>
+      <input
+        type="text"
+        id="fileToDelete"
+        name="name"
+        style="margin-left: 10px"
+        [(ngModel)]="fileToDelete"
+        placeholder="ej: 0001.ltg"
+      />
+    </div>
+    <div>
+      <button (click)="deleteMsg()">Eliminar archivo</button>
+      <p>{{ mssgeDelete }}</p>
+    </div>
+  </form>
+</div>
+
+<div style="padding: 30px">
+  <form>
+    <div>
+      <label for="fileToVisualize">Nombre del archivo: </label>
+      <input
+        type="text"
+        id="fileToVisualize"
+        name="fileToVisualize"
+        style="margin-left: 10px"
+        [(ngModel)]="fileToVisualize"
+        placeholder="ej: 0001.ltg"
+      />
+    </div>
+    <div>
+      <button (click)="visualizeImgFromCtrl()">
+        Mostrar imagen del controlador
+      </button>
+      <p>{{ messageImg }}</p>
+      <img [src]="img2" style="width: 100%; object-fit: cover" />
+    </div>
+  </form>
+</div>
+
+<div style="padding: 30px">
+  <button (click)="listImgFromCtrl()">Listar imágenes del controlador</button>
+  @for(image of ListOfImg ; track image.id) {
+  <p>Número: {{ image.id }}</p>
+  <p>Archivo: {{ image.file }}</p>
+  }
+  <p>{{ msgList }}</p>
+</div>
+
+<div style="padding: 30px">
+  <form>
+    <div>
+      <label for="plcNum">Número de PLC: </label>
+      <input
+        type="text"
+        id="plcNum"
+        name="name"
+        style="margin-left: 10px"
+        [(ngModel)]="plcNum"
+        placeholder="ej: 1"
+      />
+    </div>
+    <div>
+      <button (click)="logsFromPlc()">Obtener registros del PLC</button>
+      @for(plcData of plcOk ; track $index) {
+      <p>Log: {{ plcData.reg }}</p>
+      <p>Valor antiguo: {{ plcData.oldValue }}</p>
+      <p>Valor nuevo: {{ plcData.newValue }}</p>
+      } @for(plcData of plcNoOk ; track $index) {
+      <p>Nombre: {{ plcData.classname }}</p>
+      <p>Mensaje: {{ plcData.message }}</p>
+      }
+
+      <p>{{ mssgPlc }}</p>
+    </div>
+  </form>
+</div>
+
+<div style="padding: 30px">
+  <form [formGroup]="variableForm" (ngSubmit)="editCurrentVariable()">
+    <label for="name">Nombre variable: </label>
+    <div>
+    <input type="text" formControlName="name">
+    </div>
+    <div>
+    <label for="value">Nuevo valor: </label>
+  </div>
+  <input type="text" formControlName="value">
+
+    <button type="submit">Editar variable</button>
+  </form>
+  {{msgEdit}}
+</div>
+
+
+<div style="padding: 30px">
+  <form [formGroup]="variableForm" (ngSubmit)="chargeNewMsgNewVariables()">
+    <label for="file">Mensaje de controlador para imprimir: </label>
+    <div>
+      <input type="text" formControlName="file">
+    </div>
+
+    <label for="copies">Número de copias: </label>
+    <div>
+      <input type="number" formControlName="copies">
+    </div>
+
+    <div formArrayName="vars">
+      <div *ngFor="let variable of vars.controls; index as i" [formGroupName]="i">
+        <label for="name">Nombre variable: </label>
+        <div>
+          <input type="text" formControlName="name">
+        </div>
+        <div>
+          <label for="value">Nuevo valor: </label>
+        </div>
+        <input type="text" formControlName="value">
+      </div>
+    </div>
+
+    <button type="button" (click)="addVariable()">Añadir más variables</button>
+
+    <button type="submit">Cargar mensaje nuevo</button>
+  </form>
+</div>

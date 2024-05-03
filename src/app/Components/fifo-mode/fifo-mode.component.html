@@ -1,0 +1,60 @@
+<button (click)="emptyFifo()">Vaciar cola del fifo</button>
+<p>{{msgEmptyFifo}}</p>
+
+<button (click)="countMsgs()">Número de mensajes en cola</button>
+<p>{{msgCount}}</p>
+
+
+<form>
+    <div class="btn-group dropend">
+      <button>Mostrar imagen en cola</button>
+      <div>
+        <label for="numElement">Número de archivo: </label>
+        <input
+          type="number"
+          id="numElement"
+          name="name"
+          style="margin-left: 10px"
+          [(ngModel)]="numElement"
+          placeholder="ej: 1"
+        />
+      </div>
+      <button
+      type="button"
+      class="btn btn-secondary dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Color imagen
+    </button>
+      <ul class="dropdown-menu">
+        @for (color of colorTypesArray; track $index) {
+            <li>
+          <a (click)="visualizeElement(numElement, color[1])" class="dropdown-item">{{ 
+            color[0] 
+        }}</a>
+    </li>    
+    }
+      </ul>
+      <img [src]="img" style="width: 100%; object-fit: cover"/>
+      <p>{{ msgImg }}</p>
+    </div>
+  </form>
+
+  <button (click)="listMessages()">Listar mensajes y sus variables.</button>
+  @for(data of files ; track $index) {
+    @if(data.file != " ") {
+      <p>Archivo: {{ data.file }}</p>
+      @for(variable of data.vars ; track $index) {
+        <p>Nombre variable: {{ variable.name }}</p>
+        <p>Valor de la variable: {{ variable.value }}</p>
+       
+      }
+      }
+  }
+  <p>{{msgList}}</p>
+
+  <button (click)="printNextMsg()">Imprimir siguiente mensaje en cola</button>
+  <p>{{msgPrint}}</p>
+  
+  
