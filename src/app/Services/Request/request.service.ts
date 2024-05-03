@@ -63,8 +63,8 @@ export class RequestService {
     return this.httpClient.get(URL_BASE + '/del/'+msg, { headers }).pipe(res => res);
   }
 
-  
-  getPlcLogs(plcNum:string): Observable<any> {
+  //ver registros PLC
+  getPlcLogs(plcNum:number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -72,6 +72,7 @@ export class RequestService {
     
   }
 
+//Previsualiza un mensaje almacenado en el controlador
   getImgFromCtrl(file:string): Observable<Blob> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
@@ -79,6 +80,7 @@ export class RequestService {
     return this.httpClient.get(URL_BASE + '/prevl/'+file, { responseType: 'blob' }) ;
   }
 
+  //Lista de imágenes en el controlador
   getListOfImg(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
@@ -86,7 +88,9 @@ export class RequestService {
     return this.httpClient.get(URL_BASE + '/lstimg', { headers }).pipe(res => res);
   }
 
-  //metodos PUT
+  /*metodos PUT*/
+
+
   putUpdatePropierties(propierty: PostProps) { //no va bien ni en el postman
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',

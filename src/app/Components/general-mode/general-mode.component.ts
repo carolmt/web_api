@@ -47,7 +47,7 @@ export class GeneralModeComponent implements OnInit{
   infoFile = '';
   mssgeDelete = '';
   mssgDownload = '';
-  plcNum = '';
+  plcNum: number = 0;
   plcOk: PLC[] = [];
   plcNoOk: PlC2[] = [];
   mssgPlc = '';

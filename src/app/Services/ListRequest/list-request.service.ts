@@ -14,6 +14,7 @@ export class ListRequestService {
 
   constructor() { }
 
+  //Vaciar la lista de mensajes preparados
   getEmptyList(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -21,6 +22,7 @@ export class ListRequestService {
     return this.httpClient.get(URL_BASE + '/liste', { headers }).pipe(res => res);
   }
 
+  //Obtener la previsualización de un elemento de la lista de mensajes preparados
   getPrevImgColor(num:number, color: string): Observable<Blob> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -28,6 +30,7 @@ export class ListRequestService {
     return this.httpClient.get(URL_BASE + '/listp/'+num + '/'+color, { responseType: 'blob' }).pipe(res => res);
   }
 
+  //Número de mensajes en la lista preparados
   getCountMsgList(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -35,6 +38,7 @@ export class ListRequestService {
     return this.httpClient.get(URL_BASE + '/listc', { headers }).pipe(res => res);
   }
 
+  //Lista de mensajes preparados
   getMsgList(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',

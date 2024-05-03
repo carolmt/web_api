@@ -22,6 +22,7 @@ export class FifoRequestService {
     return this.httpClient.get(URL_BASE + '/fifoe', { headers }).pipe(res => res);
   }
 
+  //cuenta mensajes en la cola del fifo.
   getCountMsgFifo(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -29,6 +30,7 @@ export class FifoRequestService {
     return this.httpClient.get(URL_BASE + '/fifoc', { headers }).pipe(res => res);
   }
 
+//Obtener la previsualización de un elemento del FIFO
   getPrevImgColor(num:number, color: string): Observable<Blob> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -36,6 +38,7 @@ export class FifoRequestService {
     return this.httpClient.get(URL_BASE + '/fifop/'+num + '/'+color, { responseType: 'blob' }).pipe(res => res);
   }
 
+  //Lista de mensajes en el FIFO
   getMsgListFifo(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
