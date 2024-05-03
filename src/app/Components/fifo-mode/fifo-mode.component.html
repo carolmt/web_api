@@ -52,9 +52,40 @@
       }
       }
   }
-  <p>{{msgList}}</p>
+  <p>{{msgFifo}}</p>
 
   <button (click)="printNextMsg()">Imprimir siguiente mensaje en cola</button>
   <p>{{msgPrint}}</p>
   
+  <div style="padding: 30px">
+    <form [formGroup]="filesForm" (ngSubmit)="chargeMsgFifo()">
+      <div formArrayName="fifoFiles">
+        <div *ngFor="let fileControl of fifoFiles.controls; index as i" [formGroupName]="i">
+          <label for="file">Nombre mensaje a añadir a FIFO: </label>
+          <div>
+            <input type="text" formControlName="file">
+          </div>
   
+          <div formArrayName="vars">
+            <div *ngFor="let variable of getVars(fileControl).controls; index as j" [formGroupName]="j">
+              <label for="name">Nombre variable: </label>
+              <div>
+                <input type="text" formControlName="name">
+              </div>
+              <div>
+                <label for="value">Nuevo valor: </label>
+              </div>
+              <input type="text" formControlName="value">
+            </div>
+          </div>
+  
+          <button type="button" (click)="addVariable(getFileControlAsFormGroup(fileControl))">Añadir más variables</button>
+        </div>
+      </div>
+  
+      <button type="button" (click)="addFile()">Añadir más archivos</button>
+  
+      <button type="submit">Cargar mensaje nuevo</button>
+      {{msgChargeFifo}}
+    </form>
+  </div>

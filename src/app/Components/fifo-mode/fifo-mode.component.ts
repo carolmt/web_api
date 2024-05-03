@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FifoRequestService } from '../../Services/FifoRequest/fifo-request.service';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Element, Var } from '../../Interfaces/fifo.interface';
 import { CommonModule } from '@angular/common';
+import { List, Variable } from '../../Interfaces/variablesValues.interface';
 
 @Component({
   selector: 'app-fifo-mode',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './fifo-mode.component.html',
   styleUrl: './fifo-mode.component.css'
 })
@@ -32,10 +33,55 @@ export class FifoModeComponent implements OnInit{
   img: string | undefined;
   msgImg = '';
   files: Element[] = [];
-  msgList= '';
+  msgFifo= '';
   msgPrint = '';
+  filesForm: FormGroup;
+  msgChargeFifo = '';
 
-  constructor(private fifoResquest: FifoRequestService) { }
+  constructor(private fifoResquest: FifoRequestService) { 
+    this.filesForm = new FormGroup({
+      fifoFiles: new FormArray([
+        this.createFileFormGroup()
+      ])
+    });
+  }
+  
+  createFileFormGroup(): FormGroup {
+    return new FormGroup({
+      file: new FormControl(''),
+      vars: new FormArray([
+        this.createVariableFormGroup()
+      ])
+    });
+  }
+  
+  createVariableFormGroup(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(''),
+      value: new FormControl('')
+    });
+  }
+  
+  get fifoFiles(): FormArray {
+    return this.filesForm.get('fifoFiles') as FormArray;
+  }
+  
+  addVariable(fileControl: FormGroup) {
+    const vars = fileControl.get('vars') as FormArray;
+    vars.push(this.createVariableFormGroup());
+  }
+  
+  addFile() {
+    this.fifoFiles.push(this.createFileFormGroup());
+  }
+  
+  getVars(fileControl: AbstractControl): FormArray {
+    return fileControl.get('vars') as FormArray;
+  }
+  
+  getFileControlAsFormGroup(fileControl: AbstractControl): FormGroup {
+    return fileControl as FormGroup;
+  }
 
 ngOnInit(): void {
     console.log('fifo');
@@ -104,11 +150,11 @@ ngOnInit(): void {
           this.files = res;
         }else {
           this.files = [];
-          this.msgList = 'La lista de mensajes de fifo está vacía.';
+          this.msgFifo = 'La lista de mensajes de fifo está vacía.';
         }
       },
       error: (err) => {
-        this.msgList = 'El sistema está apagado o modo fifo desactivado.';
+        this.msgFifo = 'El sistema está apagado o modo fifo desactivado.';
       }
     });
   }
@@ -131,4 +177,45 @@ ngOnInit(): void {
       }
   });
 }
+
+  chargeMsgFifo(): void {
+    let codeStatus: number = 0;
+
+    const fifoFiles: List[] = this.fifoFiles.controls.map((group: AbstractControl) => {
+      const formGroup = group as FormGroup;
+      const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
+        const varFormGroup = varGroup as FormGroup;
+        return {
+          name: varFormGroup.get('name')?.value,
+          value: varFormGroup.get('value')?.value 
+        };
+      });
+      return {
+        file: formGroup.get('file')?.value,
+        vars: vars,
+      };
+    });
+  
+    this.fifoResquest.putChargeFifo(fifoFiles).subscribe({
+      next: (res) => {
+        codeStatus = res.code;
+        if (codeStatus !== 400) {
+          this.msgChargeFifo = 'Se ha cargado la lista de mensajes correctamente.';
+        } else {
+          this.msgChargeFifo = 'No se ha podido cargar la lista de mensajes.';
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.msgChargeFifo = 'El sistema no está encendido / Modo List desactivado.';
+      }
+    });
+  
+    this.filesForm.reset();
+    this.filesForm = new FormGroup({
+      fifoFiles: new FormArray([
+        this.createFileFormGroup()
+      ])
+    });
+  }
 }

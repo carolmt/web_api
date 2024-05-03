@@ -3,7 +3,7 @@ import { RequestService } from '../../Services/Request/request.service';
 import { ChargeFile, Variable } from '../../Interfaces/variablesValues.interface';
 import { Messages } from '../../Interfaces/listMessages.interface';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PLC, PlC2 } from '../../Interfaces/plcList.interface';
+import { PLC, PlC2, PLC3, PLCList } from '../../Interfaces/plcList.interface';
 import { Listimg } from '../../Interfaces/listImg.interface';
 import { Propierty } from '../../Interfaces/post.interface';
 import { CommonModule } from '@angular/common';
@@ -108,11 +108,11 @@ export class GeneralModeComponent implements OnInit{
       return this.plcRegistersForm.get('listPlcs') as FormArray;
     }
 
-    addPlc() {
+    addRegister() {
       this.listPlcs.push(this.createRegisterFormGroup());
     }
 
-    addRegister(plcControl: FormGroup) {
+    addValue(plcControl: FormGroup) {
       const values = plcControl.get('values') as FormArray;
       values.push(this.createValuesFormGroup());
     }
@@ -366,6 +366,40 @@ listImgFromCtrl() {
   }
 
   writeValuesListInPlcRegisters(): void {
-    
+    let codeStatus: number = 0;
+
+    const listPlcs: PLC3[] = this.listPlcs.controls.map((group: AbstractControl) => {
+      const formGroup = group as FormGroup;
+      const values: number[] = (formGroup.get('values') as FormArray).controls.map((valGroup: AbstractControl) => {
+        const valFormGroup = valGroup as FormGroup;
+        return valFormGroup.get('newValue')?.value; 
+      });
+      return {
+        reg: formGroup.get('reg')?.value,
+        values: values,
+      };
+    });
+    console.log(listPlcs);
+    this.requestService.putListOfValuesPlc(listPlcs).subscribe({
+      next: (res) => {
+        codeStatus = res.code;
+        if (codeStatus !== 400) {
+          this.mssgPlc = 'Se han escrito los valores en los registros PLC correctamente.';
+        }else {
+          this.mssgPlc = 'No se han podido escribir los valores en los registros PLC.';
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.mssgPlc = 'El sistema no está encendido.';
+      }
+    });
+
+    this.plcRegistersForm.reset();
+    this.plcRegistersForm = new FormGroup({
+      listPlcs: new FormArray([
+        this.createRegisterFormGroup()
+      ])
+    });
   }
 }

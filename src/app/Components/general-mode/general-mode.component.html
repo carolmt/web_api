@@ -180,3 +180,33 @@
     <button type="submit">Cargar mensaje nuevo</button>
   </form>
 </div>
+
+
+<div style="padding: 30px">
+  <form [formGroup]="plcRegistersForm" (ngSubmit)="writeValuesListInPlcRegisters()">
+    <div formArrayName="listPlcs">
+      <div *ngFor="let plcControl of listPlcs.controls; index as i" [formGroupName]="i">
+        <label for="reg">Número de registro: </label>
+        <div>
+          <input type="number" formControlName="reg">
+        </div>
+
+        <div formArrayName="values">
+          <div *ngFor="let valueControl of getValues(plcControl).controls; index as j" [formGroupName]="j">
+            <label for="newValue">Valor: </label>
+            <div>
+              <input type="number" formControlName="newValue">
+            </div>
+          </div>
+        </div>
+
+        <button type="button" (click)="addValue(getPlcControlAsFormGroup(plcControl))">Añadir más valores</button>
+      </div>
+    </div>
+
+    <button type="button" (click)="addRegister()">Añadir más registros</button>
+
+    <button type="submit">Escribir valores en registros PLC</button>
+    {{mssgPlc}}
+  </form>
+</div>

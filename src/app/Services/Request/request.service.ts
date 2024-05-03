@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostProps } from '../../Interfaces/post.interface';
 import { ChargeFile, Variable } from '../../Interfaces/variablesValues.interface';
-import { PLCList } from '../../Interfaces/plcList.interface';
+import { PLC3, PLCList } from '../../Interfaces/plcList.interface';
 
 const URL_BASE = 'http://localhost:8080/api'
 
@@ -108,7 +108,7 @@ export class RequestService {
     return this.httpClient.put(URL_BASE + '/impr', file, { headers }).pipe(res => res);
   }
 
-  putListOfValuesPlc(registros: PLCList[]): Observable<any> {
+  putListOfValuesPlc(registros: PLC3[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
