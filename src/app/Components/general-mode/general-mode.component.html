@@ -133,6 +133,10 @@
   </form>
 </div>
 
+<label for="height">Introduzca el valor de anchura: </label>
+<input type="text" id="height" [(ngModel)]="userWidth">
+<button (click)="changeWidthCurrentMsg()">Enviar</button>
+
 <div style="padding: 30px">
   <form [formGroup]="variableForm" (ngSubmit)="editCurrentVariable()">
     <label for="name">Nombre variable: </label>

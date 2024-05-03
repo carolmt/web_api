@@ -46,6 +46,7 @@ export class FifoRequestService {
     return this.httpClient.get(URL_BASE + '/fifol', { headers }).pipe(res => res);
   }
 
+  //Envia el siguiente mensaje del FIFO
   getNextMsgFifo(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -53,6 +54,9 @@ export class FifoRequestService {
     return this.httpClient.get(URL_BASE + '/fifon', { headers }).pipe(res => res);
   }
 
+  /*Métodos PUT */
+
+  //Carga la lista de mensajes en el FIFO
   putChargeFifo(fifo: List[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',

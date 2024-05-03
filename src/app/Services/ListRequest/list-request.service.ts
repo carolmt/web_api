@@ -46,6 +46,7 @@ export class ListRequestService {
     return this.httpClient.get(URL_BASE + '/listl', { headers }).pipe(res => res);
   }
 
+  //Selecciona un mensaje de la lista de mensajes preparados y lo pone en impresión
   getPrintSelected(num: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-type' : 'application/json; charset=UTF-8',
@@ -53,6 +54,9 @@ export class ListRequestService {
     return this.httpClient.get(URL_BASE + '/lists/'+num, { headers }).pipe(res => res);
   }
 
+  /*Métodos PUT*/
+
+  //Carga la lista de mensajes preparados en el controlador
   putChargeList(list: List[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',

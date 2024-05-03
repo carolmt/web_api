@@ -5,7 +5,7 @@ import { Messages } from '../../Interfaces/listMessages.interface';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PLC, PlC2, PLC3, PLCList } from '../../Interfaces/plcList.interface';
 import { Listimg } from '../../Interfaces/listImg.interface';
-import { Propierty } from '../../Interfaces/post.interface';
+import { PostProps, Propierty } from '../../Interfaces/post.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -57,12 +57,14 @@ export class GeneralModeComponent implements OnInit{
   form: FormGroup | undefined;
   nameValue = '';
   value= '';
-  refresh= false;
   properties: Propierty[] = [];
   variableForm: FormGroup;
   varsForm: FormGroup;
   msgEdit = '';
   plcRegistersForm: FormGroup;
+  widthForm: FormGroup;
+  propsForm: FormGroup;
+  userWidth: number = 0;
 
   constructor(private requestService: RequestService, private cdr: ChangeDetectorRef){
     this.variableForm = new FormGroup({
@@ -81,6 +83,14 @@ export class GeneralModeComponent implements OnInit{
     this.plcRegistersForm = new FormGroup({
       listPlcs: new FormArray([
         this.createRegisterFormGroup()
+      ])
+    });
+
+    this.widthForm = new FormGroup({
+      props: new FormArray([
+        this.propsForm = new FormGroup({
+          values: new FormControl(''),
+        })
       ])
     });
     }
@@ -321,6 +331,24 @@ listImgFromCtrl() {
 }
 
 //metodos PUT
+
+changeWidthCurrentMsg(): void {
+  let codeStatus: number;
+  const widthVariable: PostProps = ({
+    refresh: true,
+    props: [{
+      name: 'height',
+      value: this.userWidth.toString() // Convert the number to a string
+    }]
+  });
+
+  this.requestService.putUpdatePropierties(widthVariable).subscribe({
+    // ...
+  });
+}
+
+
+
   editCurrentVariable(): void {
     let codeStatus: number;
     const variables: Variable[] = [{
