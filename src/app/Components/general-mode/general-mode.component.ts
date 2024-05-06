@@ -7,11 +7,12 @@ import { PLC, PlC2, PLC3, PLCList } from '../../Interfaces/plcList.interface';
 import { Listimg } from '../../Interfaces/listImg.interface';
 import { PostProps, Propierty } from '../../Interfaces/post.interface';
 import { CommonModule } from '@angular/common';
+import SpinnerComponent from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-general-mode',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, SpinnerComponent],
   templateUrl: './general-mode.component.html',
   styleUrl: './general-mode.component.css'
 })
