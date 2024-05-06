@@ -1,7 +1,14 @@
 <div style="padding: 30px">
-  <button (click)="getStatus()">Estado programa impresora</button>
-  <p>{{ messageStatus }}</p>
 
+<h4>Estado programa impresora</h4>
+
+  <button (click)="getStatus()" type="button" class="btn btn-primary">Comprobar estado</button>
+  @if(show == true) {
+  
+  <p>{{ messageStatus }}</p>
+  }
+
+  <h4>Para impresión</h4>
   <button (click)="stopPrinting()">Parar impresión</button>
   <p>{{ messageStop }}</p>
 
@@ -133,8 +140,8 @@
   </form>
 </div>
 
-<label for="height">Introduzca el valor de anchura: </label>
-<input type="text" id="height" [(ngModel)]="userWidth">
+<label for="width">Introduzca el valor de anchura: </label>
+<input type="text" id="width" [(ngModel)]="userWidth">
 <button (click)="changeWidthCurrentMsg()">Enviar</button>
 
 <div style="padding: 30px">

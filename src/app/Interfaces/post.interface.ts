@@ -1,8 +1,8 @@
 export interface PostProps {
-    refresh: boolean;
+    refresh: true;
     props: Propierty[];
  }
  export interface Propierty {
-    name: string;
+    name: "width";
     value: string;
  }

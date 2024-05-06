@@ -19,12 +19,12 @@ export class GeneralModeComponent implements OnInit{
 
   URL_BASE='http://localhost:8080/api';
 
-  messageStatus: string | undefined;
-  messageStop: string | undefined;
+  messageStatus = '';
+  messageStop = '';
   codeStatus: number | undefined;
   img: string | undefined;
   img2: string | undefined;
-  messageImg: string | undefined;
+  messageImg = '';
   colorTypes: Map<string, string> = new Map([
     ["Todos los colores", "i"],
     ["C1", "c1"],
@@ -65,6 +65,7 @@ export class GeneralModeComponent implements OnInit{
   widthForm: FormGroup;
   propsForm: FormGroup;
   userWidth: number = 0;
+  msgWidth = '';
 
   constructor(private requestService: RequestService, private cdr: ChangeDetectorRef){
     this.variableForm = new FormGroup({
@@ -87,8 +88,10 @@ export class GeneralModeComponent implements OnInit{
     });
 
     this.widthForm = new FormGroup({
+      refresh: new FormControl(true),
       props: new FormArray([
         this.propsForm = new FormGroup({
+          name: new FormControl('width'),
           values: new FormControl(''),
         })
       ])
@@ -148,6 +151,7 @@ export class GeneralModeComponent implements OnInit{
 
 
   getStatus() {
+    if(this.show == false){
     this.requestService.getPrinterStatus().subscribe ({
       next: (res) => {
           this.codeStatus = res.code;
@@ -155,15 +159,20 @@ export class GeneralModeComponent implements OnInit{
             this.messageStatus = 'El programa está funcionando correctamente';
             console.log(this.messageStatus);
           }else {
-            this.messageStatus = 'El programa no está iniciado';
+            this.messageStatus = 'El programa no está funcionando correctamente';
             console.log(this.messageStatus);
           }
       },
       error: (err)=> {
-        this.messageStatus = 'Error en el programa';
+        this.messageStatus = 'La impresora está apagada.';
         console.log(err);
+        
       }
     })
+    this.show = true;
+  }else {
+    this.show = false;
+  }
   }
 
   stopPrinting() {
@@ -332,19 +341,23 @@ listImgFromCtrl() {
 
 //metodos PUT
 
-changeWidthCurrentMsg(): void {
+changeWidthCurrentMsg(): void {//no va bien
   let codeStatus: number;
   const widthVariable: PostProps = ({
     refresh: true,
     props: [{
-      name: 'height',
-      value: this.userWidth.toString() // Convert the number to a string
+      name: 'width',
+      value: this.userWidth.toString()
     }]
   });
 
   this.requestService.putUpdatePropierties(widthVariable).subscribe({
-    // ...
+  error: (err) => {
+    console.log(err);
+    this.msgWidth = 'El sistema no está encendido.';
+  }
   });
+  this.variableForm.reset();
 }
 
 
