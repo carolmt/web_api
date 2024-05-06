@@ -1,23 +1,31 @@
-<div style="padding: 30px">
+<div class="margenes_opciones" style = "margin-top: 20px;">
 
 <h4>Estado programa impresora</h4>
 
-  <button (click)="getStatus()" type="button" class="btn btn-primary">Comprobar estado</button>
-  @if(show == true) {
+  <button (click)="alternarOpcion('status')" type="button" class="btn btn-primary">Comprobar estado</button>
+  @if(optionStates.get('status')) {
+    <div style="padding: 10px">
   <app-spinner></app-spinner>
+</div>
   <p>{{ messageStatus }}</p>
   }
+</div>
 
-  <h4>Para impresión</h4>
-  <button (click)="stopPrinting()">Parar impresión</button>
+<div class="margenes_opciones">
+  <h4>Parar la impresión</h4>
+  <button (click)="alternarOpcion('stop')"  type="button" class="btn btn-danger">STOP</button>
+  @if(optionStates.get('stop')) {
+    <div style="padding: 10px">
   <p>{{ messageStop }}</p>
-
+    </div>
+  }
+</div>
+<div  class="margenes_opciones ">
+  <h4>Ver mensaje cargado</h4>
   <div class="btn-group dropend">
-    <button>Mostrar imagen cargada</button>
-
     <button
       type="button"
-      class="btn btn-secondary dropdown-toggle"
+      class="btn btn-primary dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -38,28 +46,37 @@
     <img [src]="img" style="width: 100%; object-fit: cover" />
   </div>
 </div>
-<div style="padding: 30px">
-  <button (click)="variablesAndValues()">
-    Mostrar variables de mensaje actual
+<div  class="margenes_opciones">
+  <h4>Mostrar variables y valores de mensaje actual</h4>
+  <button (click)="alternarOpcion('variables')" type="button" class="btn btn-primary">
+    Mostrar variables
   </button>
-  @if(show == true) { @for(data of dataVariable ; track $index) {
+  <div style="padding: 10px">
+  @if(optionStates.get('variables')) { 
+    @for(data of dataVariable ; track $index) {
+      
   <p>Nombre variable: {{ data.name }}</p>
   <p>Valor de la variable: {{ data.value }}</p>
-
   }
   <p>{{ mssgVariable }}</p>
+
   }
 </div>
+</div>
 
-<div style="padding: 30px">
-  <button (click)="listMessages()">Listar mensajes del controlador</button>
-  @if(show == true){ @for(message of listMsg ; track message.id) {
+<div  class="margenes_opciones">
+  <h4>Mostrar mensajes guardados en el controlador</h4>
+  <button (click)="alternarOpcion('messages')" type="button" class="btn btn-primary">Mostrar mensajes</button>
+  @if(optionStates.get('messages')) { @for(message of listMsg ; track message.id) {
+    <div style="padding: 10px">
   <p>Número: {{ message.id }}</p>
   <p>Archivo: {{ message.file }}</p>
+</div>
   } }
 </div>
 
-<div style="padding: 30px">
+<div  class="margenes_opciones">
+  <h4>Eliminar mensaje del controlador de manera permanente</h4>
   <form>
     <div>
       <label for="fileToDelete">Nombre del archivo*: </label>
@@ -72,14 +89,19 @@
         placeholder="ej: 0001.ltg"
       />
     </div>
-    <div>
-      <button (click)="deleteMsg()">Eliminar archivo</button>
-      <p>{{ mssgeDelete }}</p>
+    <div> 
+      <button (click)="alternarOpcion('delete')"  type="button" class="btn btn-danger">Eliminar archivo</button>
+      @if(optionStates.get('delete')) {
+        <p>{{ mssgeDelete }}</p>
+      }
+     
     </div>
   </form>
 </div>
 
-<div style="padding: 30px">
+
+<div  class="margenes_opciones">
+  <h4>Elija qué mensaje del controlador mostrar</h4>
   <form>
     <div>
       <label for="fileToVisualize">Nombre del archivo: </label>
@@ -93,25 +115,31 @@
       />
     </div>
     <div>
-      <button (click)="visualizeImgFromCtrl()">
+      <button (click)="alternarOpcion('visualize')" type="button" class="btn btn-primary">
         Mostrar imagen del controlador
       </button>
-      <p>{{ messageImg }}</p>
-      <img [src]="img2" style="width: 100%; object-fit: cover" />
+      @if(optionStates.get('visualize')) {
+        <p>{{ messageImg }}</p>
+        <img [src]="img2" style="width: 100%; object-fit: cover" />
+      }
     </div>
   </form>
 </div>
 
-<div style="padding: 30px">
-  <button (click)="listImgFromCtrl()">Listar imágenes del controlador</button>
+<div  class="margenes_opciones">
+  <h4>Listar imágenes del controlador</h4>
+  <button (click)="alternarOpcion('listImg')" type="button" class="btn btn-primary">Listar imágenes</button>
+  @if(optionStates.get('listImg')) {
   @for(image of ListOfImg ; track image.id) {
   <p>Número: {{ image.id }}</p>
   <p>Archivo: {{ image.file }}</p>
   }
   <p>{{ msgList }}</p>
+}
 </div>
 
-<div style="padding: 30px">
+<div  class="margenes_opciones">
+  <h4>Obtener registros de PLC</h4>
   <form>
     <div>
       <label for="plcNum">Número de PLC: </label>
@@ -125,7 +153,8 @@
       />
     </div>
     <div>
-      <button (click)="logsFromPlc()">Obtener registros del PLC</button>
+      <button (click)="alternarOpcion('listImg')" type="button" class="btn btn-primary">Registros</button>
+      @if(optionStates.get('plc')) {
       @for(plcData of plcOk ; track $index) {
       <p>Log: {{ plcData.reg }}</p>
       <p>Valor antiguo: {{ plcData.oldValue }}</p>
@@ -136,6 +165,7 @@
       }
 
       <p>{{ mssgPlc }}</p>
+    }
     </div>
   </form>
 </div>
@@ -144,7 +174,7 @@
 <input type="text" id="width" [(ngModel)]="userWidth">
 <button (click)="changeWidthCurrentMsg()">Enviar</button>
 
-<div style="padding: 30px">
+<div  class="margenes_opciones">
   <form [formGroup]="variableForm" (ngSubmit)="editCurrentVariable()">
     <label for="name">Nombre variable: </label>
     <div>
@@ -161,7 +191,7 @@
 </div>
 
 
-<div style="padding: 30px">
+<div  class="margenes_opciones">
   <form [formGroup]="variableForm" (ngSubmit)="chargeNewMsgNewVariables()">
     <label for="file">Mensaje de controlador para imprimir: </label>
     <div>
@@ -193,7 +223,7 @@
 </div>
 
 
-<div style="padding: 30px">
+<div  class="margenes_opciones">
   <form [formGroup]="plcRegistersForm" (ngSubmit)="writeValuesListInPlcRegisters()">
     <div formArrayName="listPlcs">
       <div *ngFor="let plcControl of listPlcs.controls; index as i" [formGroupName]="i">

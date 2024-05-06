@@ -8,6 +8,7 @@ import { Listimg } from '../../Interfaces/listImg.interface';
 import { PostProps, Propierty } from '../../Interfaces/post.interface';
 import { CommonModule } from '@angular/common';
 import SpinnerComponent from '../spinner/spinner.component';
+import { isEmpty } from 'rxjs';
 
 @Component({
   selector: 'app-general-mode',
@@ -67,6 +68,8 @@ export class GeneralModeComponent implements OnInit{
   propsForm: FormGroup;
   userWidth: number = 0;
   msgWidth = '';
+  optionStates: Map<string, boolean> = new Map<string, boolean>();
+
 
   constructor(private requestService: RequestService, private cdr: ChangeDetectorRef){
     this.variableForm = new FormGroup({
@@ -146,13 +149,53 @@ export class GeneralModeComponent implements OnInit{
       return plcControl as FormGroup;
     }
 
+    //metodo para mostrar u ocultar los mensajes, sin usar 30 variables booleanas.
+    alternarOpcion(optionId: string) {
+      const currentState = this.optionStates.get(optionId) || false;
+      this.optionStates.set(optionId, !currentState);
+
+      switch (optionId) {
+      case 'status':
+        this.getStatus();
+        break;
+      case 'stop':
+        this.stopPrinting();
+        break;
+      case 'variables':
+        this.variablesAndValues();
+        break;
+      case 'messages':
+        this.listMessages();
+        break;
+      case 'delete':
+        this.deleteMsg();
+        break;
+      case 'visualize':
+        this.visualizeImgFromCtrl();
+        break;
+      case 'list':
+        this.listImgFromCtrl();
+        break;
+      case 'listImg':
+        this.listImgFromCtrl();
+        break;
+      case 'plc':
+        this.logsFromPlc();
+        break;
+
+      default:
+        break;
+    }
+    }
+
+
   ngOnInit(): void {
     console.log('hola');
   }
 
 
   getStatus() {
-    if(this.show == false){
+
     this.requestService.getPrinterStatus().subscribe ({
       next: (res) => {
           this.codeStatus = res.code;
@@ -170,10 +213,7 @@ export class GeneralModeComponent implements OnInit{
         
       }
     })
-    this.show = true;
-  }else {
-    this.show = false;
-  }
+  
   }
 
   stopPrinting() {
@@ -211,17 +251,16 @@ export class GeneralModeComponent implements OnInit{
   }
 
   variablesAndValues() {
-    if(this.show == false){
       this.requestService.getVariablesAndValues().subscribe({
         next: (res) => {
           this.codeStatus = res.code;
-          if (this.codeStatus !=400) {
-            this.dataVariable = res;
-          }else if (res == 's') {
-            this.mssgVariable = 'Este mensaje no contiene variables';
-          }
-          else{
+          if(this.codeStatus === 400) {
             this.mssgVariable = 'No se ha detectado mensaje cargado.';
+          }
+          else if (this.codeStatus !== 400) {
+            this.dataVariable = res;
+          }else if (res.name = isEmpty()) {
+            this.mssgVariable = 'El mensaje cargado no contiene variables.'
           }
                this.cdr.detectChanges();  
       },
@@ -230,22 +269,16 @@ export class GeneralModeComponent implements OnInit{
           this.mssgVariable = 'El sistema no está encendido.';
         }
       })
-      this.show = true;
-    }else {
-      this.show = false;
-    }
-    
   }
 
   listMessages() {
-    if(this.show == false){
     this.requestService.getControllerMessages().subscribe({
       next: (res) => {
         this.codeStatus = res.code;
         if (this.codeStatus != 400) {
           this.listMsg = res;
         }else{
-          this.mssgError = 'No se ha detectado mensaje cargado.';
+          this.mssgError = 'No se han detectado mensajes en el controlador.';
         }
         this.cdr.detectChanges();
         this.show = true;
@@ -256,9 +289,6 @@ export class GeneralModeComponent implements OnInit{
         this.show = true;
       }
     })
-  }else {
-    this.show = false;
-  }
 }
 
 deleteMsg() { 
@@ -266,7 +296,6 @@ deleteMsg() {
     this.mssgeDelete = 'Por favor ingresa un nombre de archivo válido.';
     return;
   }
-
   this.requestService.getDeleteMsg(this.fileToDelete).subscribe({
     next: (res) => {
       this.codeStatus = res.code;
@@ -283,6 +312,7 @@ deleteMsg() {
     }
   });
 }
+
 //no va bien
 logsFromPlc() {
   this.requestService.getPlcLogs(this.plcNum).subscribe({
@@ -307,8 +337,12 @@ logsFromPlc() {
 visualizeImgFromCtrl() {
   this.requestService.getImgFromCtrl(this.fileToVisualize).subscribe({
     next: (res) => {
+      if(this.fileToVisualize.trim() === '') {
+        this.messageImg = 'Por favor, introduce un nombre de archivo válido.';
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
+        this.messageImg = '';
         this.img2 = reader.result as string;
       };
       if (res) {
