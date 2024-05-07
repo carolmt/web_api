@@ -91,11 +91,11 @@ export class RequestService {
   /*metodos PUT*/
 
 //Cambio de las propiedades del mensaje actual
-  putUpdatePropierties(propierty: PostProps) { //no va  y solo permite width de momento.
+  putUpdatePropierties(propierty: PostProps) { //solo funciona con width de momento.
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.put(URL_BASE + '/api/layout', propierty, { headers }).pipe(res => res);
+    return this.httpClient.put(URL_BASE + '/layout', propierty, { headers }).pipe(res => res);
   }
   
   //Cambio de los valores de algunas de las variables del mensaje actual

@@ -153,7 +153,7 @@
       />
     </div>
     <div>
-      <button (click)="alternarOpcion('listImg')" type="button" class="btn btn-primary">Registros</button>
+      <button (click)="alternarOpcion('plc')" type="button" class="btn btn-primary">Registros</button>
       @if(optionStates.get('plc')) {
       @for(plcData of plcOk ; track $index) {
       <p>Log: {{ plcData.reg }}</p>
@@ -170,11 +170,18 @@
   </form>
 </div>
 
+<div  class="margenes_opciones">
+  <h4>Cambiar anchura de mensaje</h4>
 <label for="width">Introduzca el valor de anchura: </label>
 <input type="text" id="width" [(ngModel)]="userWidth">
-<button (click)="changeWidthCurrentMsg()">Enviar</button>
+<div>
+<button (click)="changeWidthCurrentMsg()" type="button" class="btn btn-primary">Enviar</button>
+  <p>{{ msgWidth }}</p>
+</div>
+</div>
 
 <div  class="margenes_opciones">
+  <h4>Editar variables de mensaje actual</h4>
   <form [formGroup]="variableForm" (ngSubmit)="editCurrentVariable()">
     <label for="name">Nombre variable: </label>
     <div>
@@ -184,14 +191,16 @@
     <label for="value">Nuevo valor: </label>
   </div>
   <input type="text" formControlName="value">
-
-    <button type="submit">Editar variable</button>
+<div>
+    <button type="submit"  class="btn btn-primary">Editar variable</button>
+  </div>
   </form>
   {{msgEdit}}
 </div>
 
 
 <div  class="margenes_opciones">
+  <h4>Cargar mensaje nuevo del controlador y editar variables</h4>
   <form [formGroup]="variableForm" (ngSubmit)="chargeNewMsgNewVariables()">
     <label for="file">Mensaje de controlador para imprimir: </label>
     <div>
@@ -207,23 +216,24 @@
       <div *ngFor="let variable of vars.controls; index as i" [formGroupName]="i">
         <label for="name">Nombre variable: </label>
         <div>
-          <input type="text" formControlName="name">
+          <input type="text" formControlName="name" placeholder="Opcional">
         </div>
         <div>
           <label for="value">Nuevo valor: </label>
         </div>
-        <input type="text" formControlName="value">
+        <input type="text" formControlName="value" placeholder="Opcional">
       </div>
     </div>
 
-    <button type="button" (click)="addVariable()">Añadir más variables</button>
+    <button type="button" class="btn btn-primary" (click)="addVariable()">Añadir más variables</button>
 
-    <button type="submit">Cargar mensaje nuevo</button>
+    <button type="submit" class="btn btn-primary">Cargar mensaje nuevo</button>
   </form>
 </div>
 
 
 <div  class="margenes_opciones">
+  <h4>Editar valores en los registros de PLC</h4>
   <form [formGroup]="plcRegistersForm" (ngSubmit)="writeValuesListInPlcRegisters()">
     <div formArrayName="listPlcs">
       <div *ngFor="let plcControl of listPlcs.controls; index as i" [formGroupName]="i">
@@ -241,13 +251,13 @@
           </div>
         </div>
 
-        <button type="button" (click)="addValue(getPlcControlAsFormGroup(plcControl))">Añadir más valores</button>
+        <button type="button" class="btn btn-primary" (click)="addValue(getPlcControlAsFormGroup(plcControl))">Añadir más valores</button>
       </div>
     </div>
 
-    <button type="button" (click)="addRegister()">Añadir más registros</button>
+    <button class="btn btn-primary"  type="button" (click)="addRegister()">Añadir más registros</button>
 
-    <button type="submit">Escribir valores en registros PLC</button>
+    <button type="submit" class="btn btn-primary" >Escribir valores en registros PLC</button>
     {{mssgPlc}}
   </form>
 </div>

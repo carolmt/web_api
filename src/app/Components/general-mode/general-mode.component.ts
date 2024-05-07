@@ -182,7 +182,6 @@ export class GeneralModeComponent implements OnInit{
       case 'plc':
         this.logsFromPlc();
         break;
-
       default:
         break;
     }
@@ -376,8 +375,8 @@ listImgFromCtrl() {
 
 //metodos PUT
 
-changeWidthCurrentMsg(): void {//no va bien
-  let codeStatus: number;
+changeWidthCurrentMsg(): void {
+  let codeStatus = '';
   const widthVariable: PostProps = ({
     refresh: true,
     props: [{
@@ -387,15 +386,16 @@ changeWidthCurrentMsg(): void {//no va bien
   });
 
   this.requestService.putUpdatePropierties(widthVariable).subscribe({
+    next: (res) => {
+        this.msgWidth = 'Ancho de mensaje cambiado correctamente.';
+    },
   error: (err) => {
-    console.log(err);
-    this.msgWidth = 'El sistema no está encendido.';
+    console.log(err);   
+      this.msgWidth = 'El sistema está apagado.';
   }
   });
   this.variableForm.reset();
 }
-
-
 
   editCurrentVariable(): void {
     let codeStatus: number;
