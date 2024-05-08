@@ -1,0 +1,20 @@
+
+<div  class="margenes_opciones">
+  <h4>Cambiar Ip</h4>
+  <form>
+    <div>
+      <label for="newIp">Nueva IP: </label>
+      <input
+        type="text"
+        id="newIp"
+        style="margin-left: 10px"
+        [(ngModel)]="newIp"
+        placeholder="ej: 192.168.1.130"
+      />
+    </div>
+    <div> 
+      <button (click)="setIp()"  type="button" class="btn btn-primary">Cambiar IP</button>
+     <p>{{ipMsg}}</p>
+    </div>
+  </form>
+</div>

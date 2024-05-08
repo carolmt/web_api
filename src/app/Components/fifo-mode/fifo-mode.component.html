@@ -1,13 +1,16 @@
-<button (click)="emptyFifo()">Vaciar cola del fifo</button>
+<div class="margenes_opciones" style = "margin-top: 20px;">
+ <h4>Vaciar cola de Fifo</h4>
+<button (click)="emptyFifo()"type="button" class="btn btn-primary">Vaciar</button>
 <p>{{msgEmptyFifo}}</p>
 
-<button (click)="countMsgs()">Número de mensajes en cola</button>
+<h4>Ver cuántos mensajes hay en cola</h4>
+<button (click)="countMsgs()" type="button" class="btn btn-primary">Número de mensajes en cola</button>
 <p>{{msgCount}}</p>
 
 
+<h4>Mostrar imagen en cola según colores</h4>
 <form>
     <div class="btn-group dropend">
-      <button>Mostrar imagen en cola</button>
       <div>
         <label for="numElement">Número de archivo: </label>
         <input
@@ -19,9 +22,10 @@
           placeholder="ej: 1"
         />
       </div>
+      <div>
       <button
       type="button"
-      class="btn btn-secondary dropdown-toggle"
+      class="btn btn-primary dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -38,6 +42,7 @@
       </ul>
       <img [src]="img" style="width: 100%; object-fit: cover"/>
       <p>{{ msgImg }}</p>
+    </div>
     </div>
   </form>
 
@@ -89,3 +94,4 @@
       {{msgChargeFifo}}
     </form>
   </div>
+</div>

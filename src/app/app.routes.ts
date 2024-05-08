@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './Components/page-not-found/page-not-foun
 import { InicioComponent } from './Components/inicio/inicio.component';
 
 export const routes: Routes = [
-    //LazyMode !!
+  //LazyMode !!
   {
     path: 'inicio',
     loadComponent: () =>
@@ -41,6 +41,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./Components/list-fifo-mode/list-fifo-mode.component').then(
         (c) => c.ListFifoModeComponent
+      ),
+  },
+  {
+    path: 'settings',
+    loadComponent: () =>
+      import('./Components/settings/settings.component').then(
+        (c) => c.SettingsComponent
       ),
   },
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
