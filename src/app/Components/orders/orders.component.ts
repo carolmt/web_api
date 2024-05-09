@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FifoRequestService } from '../../Services/FifoRequest/fifo-request.service';
+import { ListRequestService } from '../../Services/ListRequest/list-request.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Element, Var } from '../../Interfaces/fifo.interface';
 import { CommonModule } from '@angular/common';
+import { Element, Var } from '../../Interfaces/fifo.interface';
 import { List, Variable } from '../../Interfaces/variablesValues.interface';
 
 @Component({
-  selector: 'app-fifo-mode',
+  selector: 'app-list-mode',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './fifo-mode.component.html',
-  styleUrl: './fifo-mode.component.css'
+  imports: [FormsModule , CommonModule, ReactiveFormsModule],
+  templateUrl: './orders.component.html',
+  styleUrl: './orders.component.css'
 })
-export class FifoModeComponent implements OnInit{
+export class OrdersComponent implements OnInit{
 
-  URL_BASE='http://localhost:8080/api';
-  msgEmptyFifo = '';
-  msgCount = '';
+  URL_BASE = 'http://localhost:8080/api';
+  msgEmptyList = '';
   colorTypes: Map<string, string> = new Map([
     ["Todos los colores", "i"],
     ["C1", "c1"],
@@ -32,15 +31,17 @@ export class FifoModeComponent implements OnInit{
   numElement : number = 0;
   img: string | undefined;
   msgImg = '';
+  msgCount = '';
   files: Element[] = [];
-  msgFifo= '';
+  msgList = '';
   msgPrint = '';
+  msgNum: number = 0;
   filesForm: FormGroup;
-  msgChargeFifo = '';
+  msgChargeList = '';
 
-  constructor(private fifoResquest: FifoRequestService) { 
+  constructor(private listRequest: ListRequestService) { 
     this.filesForm = new FormGroup({
-      fifoFiles: new FormArray([
+      listFiles: new FormArray([
         this.createFileFormGroup()
       ])
     });
@@ -62,8 +63,8 @@ export class FifoModeComponent implements OnInit{
     });
   }
   
-  get fifoFiles(): FormArray {
-    return this.filesForm.get('fifoFiles') as FormArray;
+  get listFiles(): FormArray {
+    return this.filesForm.get('listFiles') as FormArray;
   }
   
   addVariable(fileControl: FormGroup) {
@@ -72,7 +73,7 @@ export class FifoModeComponent implements OnInit{
   }
   
   addFile() {
-    this.fifoFiles.push(this.createFileFormGroup());
+    this.listFiles.push(this.createFileFormGroup());
   }
   
   getVars(fileControl: AbstractControl): FormArray {
@@ -83,48 +84,28 @@ export class FifoModeComponent implements OnInit{
     return fileControl as FormGroup;
   }
 
-ngOnInit(): void {
-    console.log('fifo');
+
+  ngOnInit(): void {
+    console.log('list');
   }
 
-  emptyFifo():void {
-    let codeStatus: number | undefined;
-    this.fifoResquest.getEmptyFifo().subscribe({
+  emptyList():void {
+    this.listRequest.getEmptyList().subscribe({
       next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus === 200) {
-          this.msgEmptyFifo = 'Cola de fifo vaciada correctamente.';
-        } else {
-          this.msgEmptyFifo = 'No se ha podido vaciar la cola de fifo.';
-        }
+          this.msgEmptyList = 'Lista vaciada correctamente.';
       },
       error: (err) => {
         console.log(err);
-        this.msgEmptyFifo = 'El sistema no está encendido.';
-      }
-    });
-  }
-
-  countMsgs(): void {
-    let codeStatus: number | undefined;
-    this.fifoResquest.getCountMsgFifo().subscribe({
-      next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgCount = 'La cola de fifo tiene ' + (res) + ' mensajes.';
-        } else {
-          this.msgCount = 'Cola de fifo vacía.';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgCount = 'El sistema no está modo Fifo.';
+        this.msgEmptyList ='El sistema no está encendido / Modo List desactivado.';
       }
     });
   }
 
   visualizeElement(numElement: number, color:string): void {
-    this.fifoResquest.getPrevImgColor(numElement, color).subscribe({
+
+    let codeStatus: number | undefined;
+
+    this.listRequest.getPrevImgColor(numElement, color).subscribe({
       next: (res) => {
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -137,51 +118,68 @@ ngOnInit(): void {
         }
       },
       error: (err) => {
-        this.msgImg = 'No se puede ver la imagen seleccionada.';
+        this.msgImg = 'El sistema no está encendido / Modo List desactivado.';
+      }
+    });
+  }
+
+  countMsgList(): void  {
+    let codeStatus: number | undefined;
+    this.listRequest.getCountMsgList().subscribe({
+      next: (res) => {
+        codeStatus = res.code;
+        if (codeStatus !== 400) {
+          this.msgCount = 'La lista tiene ' + (res) + ' mensajes.';
+        } else {
+          this.msgCount = 'Lista vacía.';
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.msgCount = 'El sistema no está encendido / Modo List desactivado.';
       }
     });
   }
 
   listMessages(): void {
 
-    this.fifoResquest.getMsgListFifo().subscribe({
+    this.listRequest.getMsgList().subscribe({
       next: (res) => {
         if (res.length > 0) {
           this.files = res;
         }else {
           this.files = [];
-          this.msgFifo = 'La lista de mensajes de fifo está vacía.';
+          this.msgList = 'La lista de mensajes está vacía.';
         }
       },
       error: (err) => {
-        this.msgFifo = 'El sistema está apagado o modo fifo desactivado.';
+        this.msgList = 'El sistema no está encendido / Modo List desactivado.';
       }
     });
   }
 
-  printNextMsg(): void {
-
+  printSelected(num: number): void {
     let codeStatus: number | undefined;
-
-    this.fifoResquest.getNextMsgFifo().subscribe({
-      next:(res) => {
+    this.listRequest.getPrintSelected(num).subscribe({
+      next: (res) => {
         codeStatus = res.code;
-        if (codeStatus === 200) {
-          this.msgPrint = 'Siguiente mensaje enviado correctamente.';
+        if (codeStatus !== 400) {
+          this.msgPrint = 'Se ha mandado a imprimir el mensaje seleccionado.';
         } else {
-          this.msgPrint = 'No había siguiente mensaje en cola fifo.';
+          this.msgPrint = 'No existe el mensaje seleccionado.';
         }
       },
       error: (err) => {
-        this.msgPrint = 'El sistema está apagado o modo fifo desactivado.';
+        console.log(err);
+        this.msgPrint = 'El sistema no está encendido / Modo List desactivado.';
       }
-  });
-}
+    });
+  }
 
-  chargeMsgFifo(): void {
+  chargeMsgList(): void {
     let codeStatus: number = 0;
 
-    const fifoFiles: List[] = this.fifoFiles.controls.map((group: AbstractControl) => {
+    const listFiles: List[] = this.listFiles.controls.map((group: AbstractControl) => {
       const formGroup = group as FormGroup;
       const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
         const varFormGroup = varGroup as FormGroup;
@@ -196,24 +194,24 @@ ngOnInit(): void {
       };
     });
   
-    this.fifoResquest.putChargeFifo(fifoFiles).subscribe({
+    this.listRequest.putChargeList(listFiles).subscribe({
       next: (res) => {
         codeStatus = res.code;
         if (codeStatus !== 400) {
-          this.msgChargeFifo = 'Se ha cargado la lista de mensajes correctamente.';
+          this.msgChargeList = 'Se ha cargado la lista de mensajes correctamente.';
         } else {
-          this.msgChargeFifo = 'No se ha podido cargar la lista de mensajes.';
+          this.msgChargeList = 'No se ha podido cargar la lista de mensajes.';
         }
       },
       error: (err) => {
         console.log(err);
-        this.msgChargeFifo = 'El sistema no está encendido / Modo List desactivado.';
+        this.msgChargeList = 'El sistema no está encendido / Modo List desactivado.';
       }
     });
   
     this.filesForm.reset();
     this.filesForm = new FormGroup({
-      fifoFiles: new FormArray([
+      listFiles: new FormArray([
         this.createFileFormGroup()
       ])
     });

@@ -11,13 +11,13 @@ import SpinnerComponent from '../spinner/spinner.component';
 import { isEmpty } from 'rxjs';
 
 @Component({
-  selector: 'app-general-mode',
+  selector: 'app-products',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule, SpinnerComponent],
-  templateUrl: './general-mode.component.html',
-  styleUrl: './general-mode.component.css'
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.css'
 })
-export class GeneralModeComponent implements OnInit{
+export class ProductsComponent implements OnInit{
 
   URL_BASE='http://localhost:8080/api';
 

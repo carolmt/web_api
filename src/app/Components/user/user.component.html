@@ -1,0 +1,19 @@
+<section>
+    <div class="margenes_opciones">
+    @if(isLoggedIn) {
+        <app-botones></app-botones>
+        <div class="usuarios">
+        <button (click)="isLoggedIn = false" type="button" class="btn btn-outline-warning border-2">Log out</button>
+        </div>
+    }@else {
+        <div class="usuarios">
+        <p>Identifícate</p>
+    </div>
+    <div class="usuarios">
+        <button (click)="isLoggedIn = true" type="button" class="btn btn-outline-warning border-2 ">Log In</button> <!--esto es un cambio de estado. Cuando se clicke el botton Log in
+                                                                                                                        el estado de LoggedIn se convertirá en true automático.-->
+
+</div>                                                                                                                    
+}
+</div>
+</section>

@@ -11,5 +11,13 @@
  }
  body {
     margin-bottom: 40px;
+    background-color: #fff8ec;
  }
+
+ 
+    .border-primary {
+        border-color: black;
+    }
+
+    
 /* You can add global styles to this file, and also import other style files */

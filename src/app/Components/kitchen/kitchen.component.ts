@@ -8,10 +8,10 @@ import { Variable } from '../../Interfaces/variablesValues.interface';
   selector: 'app-list-fifo-mode',
   standalone: true,
   imports: [FormsModule , CommonModule],
-  templateUrl: './list-fifo-mode.component.html',
-  styleUrl: './list-fifo-mode.component.css'
+  templateUrl: './kitchen.component.html',
+  styleUrl: './kitchen.component.css'
 })
-export class ListFifoModeComponent implements OnInit{
+export class KitchenComponent implements OnInit{
 
   URL_BASE = 'http://localhost:8080/api';
   msgInsert = '';

@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { GeneralModeComponent } from '../general-mode/general-mode.component';
-import { FifoModeComponent } from '../fifo-mode/fifo-mode.component';
-import { ListModeComponent } from '../list-mode/list-mode.component';
-import { ListFifoModeComponent } from '../list-fifo-mode/list-fifo-mode.component';
+import { ProductsComponent } from '../products/products.component';
+import { ClientComponent } from '../clients/client.component';
+import { OrdersComponent } from '../orders/orders.component';
+import { KitchenComponent } from '../kitchen/kitchen.component';
 
 @Component({
   selector: 'app-botones',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, GeneralModeComponent, FifoModeComponent, ListModeComponent, ListFifoModeComponent],
+  imports: [CommonModule, RouterOutlet, ProductsComponent, ClientComponent, OrdersComponent, KitchenComponent],
   templateUrl: './botones.component.html',
   styleUrl: './botones.component.css'
 })
@@ -17,19 +17,19 @@ export class BotonesComponent {
 
   constructor(private router: Router) { }
 
-  navigateToGeneralMode(): void {
-    this.router.navigate(['/generalMode']);
+  navigateToProducts(): void {
+    this.router.navigate(['/products']);
   }
 
-  navigateToFifoMode(): void {
-    this.router.navigate(['/fifoMode']);
+  navigateToClient(): void {
+    this.router.navigate(['/client']);
   }
 
-  navigateToListMode(): void {
-    this.router.navigate(['/listMode']);
+  navigateToOrders(): void {
+    this.router.navigate(['/orders']);
   }
 
-  navigateToListFifoMode(): void {
-    this.router.navigate(['/listFifoMode']);
+  navigateToKitchen(): void {
+    this.router.navigate(['/kitchen']);
   }
 }

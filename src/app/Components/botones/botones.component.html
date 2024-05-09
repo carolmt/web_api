@@ -1,42 +1,40 @@
 <div class="container" style="margin-top: 50px;">
-  <div class="d-grid gap-2">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="card border-primary mb-3">
-          <div class="card-header" style="text-align: center">MODO ESTANDAR</div>
-          <div class="card-body text-primary" style="text-align: center">
-            <button (click)="navigateToGeneralMode()" type="button" class="btn btn-outline-primary" >ACCIONES</button>
-          </div>
-      
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card border-warning border-4 mb-3">
+        <img src="../../../assets/icons/productos.png" class="card-img-top icono" alt="Productos">
+        <div class="card-body text-center">
+          <button (click)="navigateToProducts()" type="button" class="btn btn-outline-warning border-2 w-100 p-3 ">PRODUCTOS</button>
         </div>
       </div>
+    </div>
   
       <div class="col-md-3">
-        <div class="card border-primary mb-3">
-          <div class="card-header" style="text-align: center">MODO FIFO</div>
-          <div class="card-body text-primary" style="text-align: center">
-              <button (click)="navigateToFifoMode()" type="button" class="btn btn-outline-primary" >ACCIONES</button>
-            </div>
+        <div class="card border-warning border-4 mb-3">
+          <img src="../../../assets/icons/cliente.png" class="card-img-top icono" alt="clientes">
+        <div class="card-body text-center">
+              <button (click)="navigateToClient()" type="button" class="btn btn-outline-warning border-2 mw-100 p-3" >CLIENTE</button>
           </div>
         </div>
+      </div>
       <div class="col-md-3">
-        <div class="card border-primary mb-3">
-          <div class="card-header" style="text-align: center">MODO LIST</div>
-          <div class="card-body text-primary" style="text-align: center">
-            <button (click)="navigateToListMode()" type="button" class="btn btn-outline-primary" >ACCIONES</button>         
+        <div class="card border-warning border-4 mb-3">
+          <img src="../../../assets/icons/pedido.png" class="card-img-top icono" alt="Pedidos">
+        <div class="card-body text-center">
+            <button (click)="navigateToOrders()" type="button" class="btn btn-outline-warning border-2 mw-100 p-3" >PEDIDOS</button>         
            </div>
         </div>
       </div>
   
       <div class="col-md-3">
-        <div class="card border-primary mb-3">
-          <div class="card-header" style="text-align: center">MODO LIST/FIFO</div>
-          <div class="card-body text-primary" style="text-align: center">
-            <button (click)="navigateToListFifoMode()" type="button" class="btn btn-outline-primary" >ACCIONES</button>         
+        <div class="card border-warning border-4 mb-3">
+          <img src="../../../assets/icons/cocina.png" class="card-img-top icono" alt="Cocina">
+        <div class="card-body text-center">
+            <button (click)="navigateToKitchen()" type="button" class="btn btn-outline-warning border-2 mw-100 p-3" >COCINA</button>         
           </div>
         </div>
       </div>
     </div>
-  </div>
+
   </div>
   <router-outlet></router-outlet>

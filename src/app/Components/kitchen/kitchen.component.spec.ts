@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FifoModeComponent } from './fifo-mode.component';
+import { KitchenComponent } from './kitchen.component';
 
-describe('FifoModeComponent', () => {
-  let component: FifoModeComponent;
-  let fixture: ComponentFixture<FifoModeComponent>;
+describe('ListFifoModeComponent', () => {
+  let component: KitchenComponent;
+  let fixture: ComponentFixture<KitchenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FifoModeComponent]
+      imports: [KitchenComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FifoModeComponent);
+    fixture = TestBed.createComponent(KitchenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

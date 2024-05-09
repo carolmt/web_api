@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListFifoModeComponent } from './list-fifo-mode.component';
+import { OrdersComponent } from './orders.component';
 
-describe('ListFifoModeComponent', () => {
-  let component: ListFifoModeComponent;
-  let fixture: ComponentFixture<ListFifoModeComponent>;
+describe('ListModeComponent', () => {
+  let component: OrdersComponent;
+  let fixture: ComponentFixture<OrdersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListFifoModeComponent]
+      imports: [OrdersComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ListFifoModeComponent);
+    fixture = TestBed.createComponent(OrdersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

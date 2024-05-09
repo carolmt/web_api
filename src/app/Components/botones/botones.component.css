@@ -1,3 +1,22 @@
 .margenes_cartas {
     margin-top: 20px;
 }
+.icono {
+    height: 120px; /* Ajusta la altura según tu diseño */
+    width: 120px; /* Ajusta el ancho según tu diseño */
+   /* Ajusta el tamaño del icono */
+    background-color: transparent;
+    border: none;background-repeat: no-repeat;
+    margin-top: 15px;
+    height: 120px; /* Ajusta la altura según tu diseño */
+    width: 120px; /* Ajusta el ancho según tu diseño */
+     /* Ajusta el tamaño del icono */
+    background-color: transparent;
+    border: none;
+}
+.card {
+    align-items: center;
+}
+.btn-full-width {
+    width: 100%; /* Ocupar todo el ancho disponible */
+  }

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { GeneralModeComponent } from './Components/general-mode/general-mode.component';
-import { FifoModeComponent } from './Components/fifo-mode/fifo-mode.component';
-import { ListModeComponent } from './Components/list-mode/list-mode.component';
-import { ListFifoModeComponent } from './Components/list-fifo-mode/list-fifo-mode.component';
+import { ProductsComponent } from './Components/products/products.component';
+import { ClientComponent } from './Components/clients/client.component';
+import { OrdersComponent } from './Components/orders/orders.component';
+import { KitchenComponent } from './Components/kitchen/kitchen.component';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 
@@ -16,31 +16,31 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'generalMode',
+    path: 'products',
     loadComponent: () =>
-      import('./Components/general-mode/general-mode.component').then(
-        (c) => c.GeneralModeComponent
+      import('./Components/products/products.component').then(
+        (c) => c.ProductsComponent
       ),
   },
   {
-    path: 'fifoMode',
+    path: 'client',
     loadComponent: () =>
-      import('./Components/fifo-mode/fifo-mode.component').then(
-        (c) => c.FifoModeComponent
+      import('./Components/clients/client.component').then(
+        (c) => c.ClientComponent
       ),
   },
   {
-    path: 'listMode',
+    path: 'orders',
     loadComponent: () =>
-      import('./Components/list-mode/list-mode.component').then(
-        (c) => c.ListModeComponent
+      import('./Components/orders/orders.component').then(
+        (c) => c.OrdersComponent
       ),
   },
   {
-    path: 'listFifoMode',
+    path: 'kitchen',
     loadComponent: () =>
-      import('./Components/list-fifo-mode/list-fifo-mode.component').then(
-        (c) => c.ListFifoModeComponent
+      import('./Components/kitchen/kitchen.component').then(
+        (c) => c.KitchenComponent
       ),
   },
   {
