@@ -4,11 +4,13 @@ import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, Reacti
 import { Element, Var } from '../../Interfaces/fifo.interface';
 import { CommonModule } from '@angular/common';
 import { List, Variable } from '../../Interfaces/variablesValues.interface';
+import { BotonesComponent } from '../botones/botones.component';
+import { NavComponent } from '../nav/nav.component';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, BotonesComponent, NavComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })

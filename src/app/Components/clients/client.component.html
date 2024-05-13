@@ -1,97 +1,16 @@
-<div class="margenes_opciones" style = "margin-top: 20px;">
- <h4>Vaciar cola de Fifo</h4>
-<button (click)="emptyFifo()"type="button" class="btn btn-primary">Vaciar</button>
-<p>{{msgEmptyFifo}}</p>
+  <app-nav></app-nav>
 
-<h4>Ver cuántos mensajes hay en cola</h4>
-<button (click)="countMsgs()" type="button" class="btn btn-primary">Número de mensajes en cola</button>
-<p>{{msgCount}}</p>
-
-
-<h4>Mostrar imagen en cola según colores</h4>
-<form>
-    <div class="btn-group dropend">
-      <div>
-        <label for="numElement">Número de archivo: </label>
-        <input
-          type="number"
-          id="numElement"
-          name="name"
-          style="margin-left: 10px"
-          [(ngModel)]="numElement"
-          placeholder="ej: 1"
-        />
-      </div>
-      <div>
-      <button
-      type="button"
-      class="btn btn-primary dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      Color imagen
-    </button>
-      <ul class="dropdown-menu">
-        @for (color of colorTypesArray; track $index) {
-            <li>
-          <a (click)="visualizeElement(numElement, color[1])" class="dropdown-item">{{ 
-            color[0] 
-        }}</a>
-    </li>    
-    }
-      </ul>
-      <img [src]="img" style="width: 100%; object-fit: cover"/>
-      <p>{{ msgImg }}</p>
-    </div>
-    </div>
-  </form>
-
-  <button (click)="listMessages()">Listar mensajes y sus variables.</button>
-  @for(data of files ; track $index) {
-    @if(data.file != " ") {
-      <p>Archivo: {{ data.file }}</p>
-      @for(variable of data.vars ; track $index) {
-        <p>Nombre variable: {{ variable.name }}</p>
-        <p>Valor de la variable: {{ variable.value }}</p>
-       
-      }
-      }
-  }
-  <p>{{msgFifo}}</p>
-
-  <button (click)="printNextMsg()">Imprimir siguiente mensaje en cola</button>
-  <p>{{msgPrint}}</p>
-  
-  <div style="padding: 30px">
-    <form [formGroup]="filesForm" (ngSubmit)="chargeMsgFifo()">
-      <div formArrayName="fifoFiles">
-        <div *ngFor="let fileControl of fifoFiles.controls; index as i" [formGroupName]="i">
-          <label for="file">Nombre mensaje a añadir a FIFO: </label>
-          <div>
-            <input type="text" formControlName="file">
-          </div>
-  
-          <div formArrayName="vars">
-            <div *ngFor="let variable of getVars(fileControl).controls; index as j" [formGroupName]="j">
-              <label for="name">Nombre variable: </label>
-              <div>
-                <input type="text" formControlName="name">
-              </div>
-              <div>
-                <label for="value">Nuevo valor: </label>
-              </div>
-              <input type="text" formControlName="value">
-            </div>
-          </div>
-  
-          <button type="button" (click)="addVariable(getFileControlAsFormGroup(fileControl))">Añadir más variables</button>
-        </div>
-      </div>
-  
-      <button type="button" (click)="addFile()">Añadir más archivos</button>
-  
-      <button type="submit">Cargar mensaje nuevo</button>
-      {{msgChargeFifo}}
-    </form>
-  </div>
+<div class="margenes">
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Número de teléfono</label>
+  <input type="tel" class="form-control" id="exampleFormControlInput1" >
+  <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+  <input type="name" class="form-control" id="exampleFormControlInput1">
+  <label for="exampleFormControlInput1" class="form-label">Dirección</label>
+  <input type="direction" class="form-control" id="exampleFormControlInput1">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Comentarios adicionales</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Datáfono"></textarea>
+</div>
 </div>
