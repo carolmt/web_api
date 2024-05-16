@@ -1,14 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, COMPILER_OPTIONS  } from '@angular/core';
 import { RequestService } from '../../Services/Request/request.service';
-import { ChargeFile, Variable } from '../../Interfaces/variablesValues.interface';
-import { Messages } from '../../Interfaces/listMessages.interface';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PLC, PlC2, PLC3, PLCList } from '../../Interfaces/plcList.interface';
-import { Listimg } from '../../Interfaces/listImg.interface';
-import { PostProps, Propierty } from '../../Interfaces/post.interface';
 import { CommonModule } from '@angular/common';
 import SpinnerComponent from '../spinner/spinner.component';
 import { isEmpty } from 'rxjs';
+import { Categoria } from '../../Interfaces/baseDatos.interface';
 
 @Component({
   selector: 'app-products',
@@ -18,12 +14,30 @@ import { isEmpty } from 'rxjs';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit{
+  
+  URL_BASE='http://localhost:8080/RestoServ/api/categorias';
+  categorias: Categoria[] = [];
+
+  constructor(private requestService: RequestService){}
+
   ngOnInit(): void {
     console.log('hola');
+    this.getCategorias();
+    
   }
-  /*URL_BASE='http://localhost:8080/api';
 
-  messageStatus = '';
+  public getCategorias(): void {
+    this.requestService.getAllCategories().subscribe({
+      next: (res) => {
+        this.categorias = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+/*  messageStatus = '';
   messageStop = '';
   codeStatus: number | undefined;
   img: string | undefined;

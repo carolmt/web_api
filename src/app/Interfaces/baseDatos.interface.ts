@@ -22,3 +22,16 @@ export interface Cliente {
     direccion:  string;
     comentario: null | string;
 }
+
+export interface Categoria {
+    catId:     number;
+    nomCat:    string;
+    productos: Producto[];
+}
+
+export interface Producto {
+    prodId:        number;
+    nomProd:       string;
+    precio:        number;
+    detallesOrden: any[];
+}

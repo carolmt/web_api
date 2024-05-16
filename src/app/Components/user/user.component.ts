@@ -3,7 +3,7 @@ import { BotonesComponent } from '../botones/botones.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequestService } from '../../Services/Request/request.service';
-import { Empleado, Orden } from '../../Interfaces/empleados.interface';
+import { Empleado, Orden } from '../../Interfaces/baseDatos.interface';
 
 @Component({
   selector: 'app-user',
@@ -75,7 +75,7 @@ export class UserComponent implements OnInit {
         },
           error: (err) => {
             console.log(err);
-            this.mssgAuth = 'Error en la conexión con el servidor.'
+            this.mssgAuth = 'Nombre o código de usuario incorrecto.'
         }
       });
   }

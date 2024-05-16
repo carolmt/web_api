@@ -1,9 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostProps } from '../../Interfaces/post.interface';
-import { ChargeFile, Variable } from '../../Interfaces/variablesValues.interface';
-import { PLC3, PLCList } from '../../Interfaces/plcList.interface';
 
 const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
@@ -103,37 +100,37 @@ export class RequestService {
   /*METODOS PUT*/
                   //ORDENES
 
-//Cambio de las propiedades del mensaje actual
-  putUpdatePropierties(propierty: PostProps) { //solo funciona con width de momento.
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-    return this.httpClient.put(URL_BASE + '/layout', propierty, { headers }).pipe(res => res);
-  }
+// //Cambio de las propiedades del mensaje actual
+//   putUpdatePropierties(propierty: PostProps) { //solo funciona con width de momento.
+//     const headers = new HttpHeaders({
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     });
+//     return this.httpClient.put(URL_BASE + '/layout', propierty, { headers }).pipe(res => res);
+//   }
   
-  //Cambio de los valores de algunas de las variables del mensaje actual
-  putUpdateCurrentVariables(variables: Variable[]): Observable<any> { 
-    const headers = new HttpHeaders({
-      'Content-Type' : 'application/json; charset=UTF-8',
-    });
-    return this.httpClient.put(URL_BASE + '/vars', variables,{headers}).pipe(res => res);
-  }
+//   //Cambio de los valores de algunas de las variables del mensaje actual
+//   putUpdateCurrentVariables(variables: Variable[]): Observable<any> { 
+//     const headers = new HttpHeaders({
+//       'Content-Type' : 'application/json; charset=UTF-8',
+//     });
+//     return this.httpClient.put(URL_BASE + '/vars', variables,{headers}).pipe(res => res);
+//   }
 
-  //Cambio del mensaje actual y sus variables
-  putNewMsgAndVariables(file: ChargeFile): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-    return this.httpClient.put(URL_BASE + '/impr', file, { headers }).pipe(res => res);
-  }
+//   //Cambio del mensaje actual y sus variables
+//   putNewMsgAndVariables(file: ChargeFile): Observable<any> {
+//     const headers = new HttpHeaders({
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     });
+//     return this.httpClient.put(URL_BASE + '/impr', file, { headers }).pipe(res => res);
+//   }
 
-  //Escribe una lista de valores en los registros del PLC
-  putListOfValuesPlc(registros: PLC3[]): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-    return this.httpClient.put(URL_BASE + '/plcwrt', registros, { headers }).pipe(res => res);
-  }
+//   //Escribe una lista de valores en los registros del PLC
+//   putListOfValuesPlc(registros: PLC3[]): Observable<any> {
+//     const headers = new HttpHeaders({
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     });
+//     return this.httpClient.put(URL_BASE + '/plcwrt', registros, { headers }).pipe(res => res);
+//   }
   
 }
  
