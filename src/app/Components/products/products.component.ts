@@ -18,8 +18,10 @@ import { isEmpty } from 'rxjs';
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit{
-
-  URL_BASE='http://localhost:8080/api';
+  ngOnInit(): void {
+    console.log('hola');
+  }
+  /*URL_BASE='http://localhost:8080/api';
 
   messageStatus = '';
   messageStop = '';
@@ -477,5 +479,5 @@ changeWidthCurrentMsg(): void {
         this.createRegisterFormGroup()
       ])
     });
-  }
+  }*/
 }

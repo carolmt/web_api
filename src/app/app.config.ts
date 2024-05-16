@@ -9,6 +9,6 @@ import { SpinnerInterceptor } from './Interceptors/spinner.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch(), withInterceptors([SpinnerInterceptor])), provideAnimationsAsync()]
+  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch(), withInterceptors([SpinnerInterceptor])), provideAnimationsAsync(), provideAnimationsAsync()]
 };
 

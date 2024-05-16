@@ -5,7 +5,7 @@ import { PostProps } from '../../Interfaces/post.interface';
 import { ChargeFile, Variable } from '../../Interfaces/variablesValues.interface';
 import { PLC3, PLCList } from '../../Interfaces/plcList.interface';
 
-const URL_BASE = 'http://localhost:8080/api'
+const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
 @Injectable({
   providedIn: 'root'
@@ -16,79 +16,92 @@ export class RequestService {
 
   constructor() { }
 
-  getPrinterStatus(): Observable<any> {
+/*METODOS GET*/
+                  // CATEGORIAS
+
+  //obtener todas las categorias
+  getAllCategories(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE, { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + "/categorias", { headers }).pipe(res => res);
   }
 
-//Para la impresion
-  getStopPrinting(): Observable<any> {
+//obtener categoria específica
+  getSpecificCategory(nameCat: string ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/stop', { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + '/categorias/' + nameCat, { headers }).pipe(res => res);
   }
 
-  //Muestra la imagen cargada o los colores que pinta
-  getImgFromCurrentMessage(color:string): Observable<Blob> {
+          //PRODUCTOS
+
+  //Obtener producto específico
+  getProduct(product:string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/prev/'+color, { responseType: 'blob' }) ;
+    return this.httpClient.get(URL_BASE + '/categorias/' + product, { headers }).pipe(res => res);
   }
 
-  //Muestra las variables y valores de la imagen cargada.
-  getVariablesAndValues(): Observable<any> {
+            //EMPLEADOS
+  
+  //Obtener empleado por id
+  getEmployeeById(empl_id : number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/lstvar', { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + '/empleados/' + empl_id, { headers }).pipe(res => res);
   }
 
-//mostrar los mensajes del controlador.
-  getControllerMessages(): Observable<any> {
+  //Obtener empleado por codigo auth
+  getEmployeeByCode(code : number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/lstlay', { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + '/empleados/codigo/' + code, { headers }).pipe(res => res);
   }
 
-  //borra el mensaje para siempre.
-  getDeleteMsg(msg: string): Observable<any>  {
+  //Obtener empleado por codigo y nombre
+  getEmployeeByCodeAndName(code : number, name: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/del/'+msg, { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + '/empleados/codigo/' + code + '?' + name, { headers }).pipe(res => res);
   }
 
-  //ver registros PLC
-  getPlcLogs(plcNum:number): Observable<any> {
+          //ORDENES
+
+  //Obtener todas las órdenes.
+  getAllOrders(): Observable<any>  {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-      return this.httpClient.get(URL_BASE + '/plclst/'+plcNum, { headers }).pipe(res => res);
-    
+    return this.httpClient.get(URL_BASE + '/ordenes', { headers }).pipe(res => res);
   }
 
-//Previsualiza un mensaje almacenado en el controlador
-  getImgFromCtrl(file:string): Observable<Blob> {
+  //Obtener orden por id
+  getORderById(ord_id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/prevl/'+file, { responseType: 'blob' }) ;
+      return this.httpClient.get(URL_BASE + '/ordenes/'+ord_id, { headers }).pipe(res => res);
   }
 
-  //Lista de imágenes en el controlador
-  getListOfImg(): Observable<any> {
+        //CLIENTES
+
+//Obtener cliente mediante telf
+  getClientByTelf(telf : number): Observable<Blob> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/lstimg', { headers }).pipe(res => res);
+    return this.httpClient.get(URL_BASE + '/clientes/' + telf, { responseType: 'blob' }) ;
   }
 
-  /*metodos PUT*/
+  
+  /*METODOS PUT*/
+                  //ORDENES
 
 //Cambio de las propiedades del mensaje actual
   putUpdatePropierties(propierty: PostProps) { //solo funciona con width de momento.

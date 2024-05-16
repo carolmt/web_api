@@ -1,21 +1,47 @@
-<section>
-    <div class="margenes_opciones">
+<div class="margenes_opciones">
     @if(isLoggedIn) {
         <app-botones></app-botones>
         <div class="usuarios">
-        <button (click)="isLoggedIn = false" type="button" class="btn btn-outline-warning border-2">Log out</button>
+        <button (click)="isLoggedIn = false" type="button" class="boton-ingresar">Log out</button>
         </div>
     }@else {
-        <div class="usuarios">
-        <p style="font-family: sans-serif;
-        font-size:30px;
-        font-style: normal;">Identifícate</p>
-    </div>
-    <div class="usuarios">
-        <button (click)="isLoggedIn = true" type="button" class="btn btn-outline-warning border-2 ">Log In</button> <!--esto es un cambio de estado. Cuando se clicke el botton Log in
-                                                                                                                        el estado de LoggedIn se convertirá en true automático.-->
-
-</div>                                                                                                                    
+<div class="container-fluid mt-5"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center"
+     fxLayoutGap="0"
+     fxLayoutGap.xs="0">
+  <div class="login-card mat-elevation-z8 mb-5" fxFlex="45%">
+    <main class="login-content"
+          fxLayout="column"
+          fxLayoutAlign="center center">
+      <span class="login-header mb-5 mt-3">Login</span>
+      <!-- login form -->
+      <form [formGroup]="form" class="login-form align-items-center" fxLayout="column" (ngSubmit)="login($event)">
+        <div class="form-floating mb-3">
+            <input matInput type="text" class="form-control" formControlName='nomEmpl' id="nameEmpl">
+            <label for="floatingInput">Nombre Staff</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="codeEmpl" formControlName='codigo'>
+            <label for="floatingPassword">Password</label>
+          </div>
+        <button class="boton-ingresar" type="submit" >Ingresar</button>
+        <p>{{mssgAuth}}</p>
+      </form>
+    </main>
+  </div>
+  <div class="login-card login-content mat-elevation-z8" 
+          fxFlex=45%
+          fxLayout="column"
+          fxLayoutAlign="end start"
+          [ngStyle]="unsplashClass()">
+      <div class="login-aside-overlay"></div>
+      <h1 class="login-welcome-text">¡Bienvenido!</h1>
+      <hr class="login-aside-hr">
+  </div>
+</div>
 }
 </div>
-</section>
+   
+
