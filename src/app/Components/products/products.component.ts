@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, Reacti
 import { CommonModule } from '@angular/common';
 import SpinnerComponent from '../spinner/spinner.component';
 import { isEmpty } from 'rxjs';
-import { Categoria } from '../../Interfaces/baseDatos.interface';
+import { Categoria, Producto } from '../../Interfaces/baseDatos.interface';
 
 @Component({
   selector: 'app-products',
@@ -17,6 +17,7 @@ export class ProductsComponent implements OnInit{
   
   URL_BASE='http://localhost:8080/RestoServ/api/categorias';
   categorias: Categoria[] = [];
+  productos: Producto[] = [];
 
   constructor(private requestService: RequestService){}
 
@@ -36,6 +37,10 @@ export class ProductsComponent implements OnInit{
       }
     });
   }
+
+  /*public getProductos(): void {
+    this.requestService.get
+  }*/
 
 /*  messageStatus = '';
   messageStop = '';
