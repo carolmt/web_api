@@ -2,6 +2,7 @@
     margin-left: 50px;
     margin-top: 40px;
     margin-right: 50px;
+    position: relative;
 }
     .btn-primary {
         margin-top: 10px;
@@ -24,6 +25,22 @@
     margin-right: 50px;
 }
     
+.boton-grande {
+    
+    font-size: 30px; /* Ajusta el tamaño del texto */
+    padding: 40px 60px; /* Ajusta el tamaño del botón, puedes modificar los valores para que se vea como deseas */
+    margin: 15px; /* Espacio alrededor de cada botón */
+}
+
+/* Clase para agregar un margen entre los botones */
+.boton-separado {
+    
+    align-items: center; /* Centra los botones verticalmente */
+    margin-right: 30px; /* Espaciado a la derecha de 30px */
+    margin-top: 40px;
+    top: 50%;
+    left: 50%;
+}
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
