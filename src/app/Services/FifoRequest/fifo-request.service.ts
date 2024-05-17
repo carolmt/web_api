@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { List } from '../../Interfaces/variablesValues.interface';
 
 const URL_BASE = 'http://localhost:8080/api'
 
@@ -57,10 +56,10 @@ export class FifoRequestService {
   /*Métodos PUT */
 
   //Carga la lista de mensajes en el FIFO
-  putChargeFifo(fifo: List[]): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-    return this.httpClient.put(URL_BASE + '/impf', fifo, { headers }).pipe(res => res);
-  }
+  // putChargeFifo(fifo: List[]): Observable<any> {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //   });
+  //   return this.httpClient.put(URL_BASE + '/impf', fifo, { headers }).pipe(res => res);
+  // }
 }

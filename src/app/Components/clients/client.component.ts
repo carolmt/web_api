@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FifoRequestService } from '../../Services/FifoRequest/fifo-request.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Element, Var } from '../../Interfaces/fifo.interface';
 import { CommonModule } from '@angular/common';
-import { List, Variable } from '../../Interfaces/variablesValues.interface';
 import { BotonesComponent } from '../botones/botones.component';
 import { NavComponent } from '../nav/nav.component';
 
@@ -180,44 +178,44 @@ ngOnInit(): void {
   });
 }
 
-  chargeMsgFifo(): void {
-    let codeStatus: number = 0;
+  // chargeMsgFifo(): void {
+  //   let codeStatus: number = 0;
 
-    const fifoFiles: List[] = this.fifoFiles.controls.map((group: AbstractControl) => {
-      const formGroup = group as FormGroup;
-      const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
-        const varFormGroup = varGroup as FormGroup;
-        return {
-          name: varFormGroup.get('name')?.value,
-          value: varFormGroup.get('value')?.value 
-        };
-      });
-      return {
-        file: formGroup.get('file')?.value,
-        vars: vars,
-      };
-    });
+  //   const fifoFiles: List[] = this.fifoFiles.controls.map((group: AbstractControl) => {
+  //     const formGroup = group as FormGroup;
+  //     const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
+  //       const varFormGroup = varGroup as FormGroup;
+  //       return {
+  //         name: varFormGroup.get('name')?.value,
+  //         value: varFormGroup.get('value')?.value 
+  //       };
+  //     });
+  //     return {
+  //       file: formGroup.get('file')?.value,
+  //       vars: vars,
+  //     };
+  //   });
   
-    this.fifoResquest.putChargeFifo(fifoFiles).subscribe({
-      next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgChargeFifo = 'Se ha cargado la lista de mensajes correctamente.';
-        } else {
-          this.msgChargeFifo = 'No se ha podido cargar la lista de mensajes.';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgChargeFifo = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
+  //   this.fifoResquest.putChargeFifo(fifoFiles).subscribe({
+  //     next: (res) => {
+  //       codeStatus = res.code;
+  //       if (codeStatus !== 400) {
+  //         this.msgChargeFifo = 'Se ha cargado la lista de mensajes correctamente.';
+  //       } else {
+  //         this.msgChargeFifo = 'No se ha podido cargar la lista de mensajes.';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.msgChargeFifo = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
   
-    this.filesForm.reset();
-    this.filesForm = new FormGroup({
-      fifoFiles: new FormArray([
-        this.createFileFormGroup()
-      ])
-    });
-  }
+  //   this.filesForm.reset();
+  //   this.filesForm = new FormGroup({
+  //     fifoFiles: new FormArray([
+  //       this.createFileFormGroup()
+  //     ])
+  //   });
+  // }
 }

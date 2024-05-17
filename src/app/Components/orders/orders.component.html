@@ -43,7 +43,7 @@
   <button (click)="countMsgList()">Número de mensajes en lista</button>
   <p>{{msgCount}}</p>
 
-  <button (click)="listMessages()">Listar mensajes y sus variables.</button>
+  <!-- <button (click)="listMessages()">Listar mensajes y sus variables.</button>
   @for(data of files ; track $index) {
     @if(data.file != " ") {
       <p>Archivo: {{ data.file }}</p>
@@ -52,7 +52,7 @@
         <p>Valor de la variable: {{ variable.value }}</p>
       }
       }
-  }
+  } -->
   <p>{{msgList}}</p>
   
   <div style="padding: 30px">
@@ -76,7 +76,7 @@
   </div>
 
   <div style="padding: 30px">
-  <form [formGroup]="filesForm" (ngSubmit)="chargeMsgList()">
+  <!-- <form [formGroup]="filesForm" (ngSubmit)="chargeMsgList()">
     <div formArrayName="listFiles">
       <div *ngFor="let fileControl of listFiles.controls; index as i" [formGroupName]="i">
         <label for="file">Nombre mensaje a añadir en listado: </label>
@@ -105,5 +105,5 @@
 
     <button type="submit">Cargar mensaje nuevo</button>
     {{msgChargeList}}
-  </form>
+  </form> -->
 </div>

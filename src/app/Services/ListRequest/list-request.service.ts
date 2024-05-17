@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ChargeFile, List } from '../../Interfaces/variablesValues.interface';
+
 
 const URL_BASE = 'http://localhost:8080/api'
 
@@ -57,10 +57,10 @@ export class ListRequestService {
   /*Métodos PUT*/
 
   //Carga la lista de mensajes preparados en el controlador
-  putChargeList(list: List[]): Observable<any> {
+  /*putChargeList(list: List[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
     return this.httpClient.put(URL_BASE + '/impl', list, { headers }).pipe(res => res);
-  }
+  }*/
 }

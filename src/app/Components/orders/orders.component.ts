@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ListRequestService } from '../../Services/ListRequest/list-request.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Element, Var } from '../../Interfaces/fifo.interface';
-import { List, Variable } from '../../Interfaces/variablesValues.interface';
 
 @Component({
   selector: 'app-list-mode',
@@ -176,44 +174,44 @@ export class OrdersComponent implements OnInit{
     });
   }
 
-  chargeMsgList(): void {
-    let codeStatus: number = 0;
+  // chargeMsgList(): void {
+  //   let codeStatus: number = 0;
 
-    const listFiles: List[] = this.listFiles.controls.map((group: AbstractControl) => {
-      const formGroup = group as FormGroup;
-      const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
-        const varFormGroup = varGroup as FormGroup;
-        return {
-          name: varFormGroup.get('name')?.value,
-          value: varFormGroup.get('value')?.value 
-        };
-      });
-      return {
-        file: formGroup.get('file')?.value,
-        vars: vars,
-      };
-    });
+  //   const listFiles: List[] = this.listFiles.controls.map((group: AbstractControl) => {
+  //     const formGroup = group as FormGroup;
+  //     const vars: Variable[] = (formGroup.get('vars') as FormArray).controls.map((varGroup: AbstractControl) => {
+  //       const varFormGroup = varGroup as FormGroup;
+  //       return {
+  //         name: varFormGroup.get('name')?.value,
+  //         value: varFormGroup.get('value')?.value 
+  //       };
+  //     });
+  //     return {
+  //       file: formGroup.get('file')?.value,
+  //       vars: vars,
+  //     };
+  //   });
   
-    this.listRequest.putChargeList(listFiles).subscribe({
-      next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgChargeList = 'Se ha cargado la lista de mensajes correctamente.';
-        } else {
-          this.msgChargeList = 'No se ha podido cargar la lista de mensajes.';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgChargeList = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
+  //   this.listRequest.putChargeList(listFiles).subscribe({
+  //     next: (res) => {
+  //       codeStatus = res.code;
+  //       if (codeStatus !== 400) {
+  //         this.msgChargeList = 'Se ha cargado la lista de mensajes correctamente.';
+  //       } else {
+  //         this.msgChargeList = 'No se ha podido cargar la lista de mensajes.';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.msgChargeList = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
   
-    this.filesForm.reset();
-    this.filesForm = new FormGroup({
-      listFiles: new FormArray([
-        this.createFileFormGroup()
-      ])
-    });
-  }
+  //   this.filesForm.reset();
+  //   this.filesForm = new FormGroup({
+  //     listFiles: new FormArray([
+  //       this.createFileFormGroup()
+  //     ])
+  //   });
+  // }
 }
