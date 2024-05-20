@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CreateOrder, DetallesOrden, Orden } from '../../Interfaces/baseDatos.interface';
 
 const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
@@ -97,16 +98,28 @@ export class RequestService {
   }
 
   
-  /*METODOS PUT*/
-                  //ORDENES
+  /*METODOS POST*/
 
-// //Cambio de las propiedades del mensaje actual
-//   putUpdatePropierties(propierty: PostProps) { //solo funciona con width de momento.
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json; charset=UTF-8',
-//     });
-//     return this.httpClient.put(URL_BASE + '/layout', propierty, { headers }).pipe(res => res);
-//   }
+                  //DETALLE ORDENES
+
+  //Agregar detalle de orden
+  postOrderDetail(detail : DetallesOrden) {
+    const headers = new HttpHeaders({
+       'Content-Type': 'application/json; charset=UTF-8',
+     });
+     return this.httpClient.post(URL_BASE + '/detalleOrdenes', detail, { headers }).pipe(res => res);
+  }
+
+                  //ORDENES
+//Agregar orden
+  postNewOrder(order: CreateOrder): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+    return this.httpClient.post(URL_BASE + '/ordenes', order, { headers }).pipe(res => res);
+  }
+
+                //CLIENTES
   
 //   //Cambio de los valores de algunas de las variables del mensaje actual
 //   putUpdateCurrentVariables(variables: Variable[]): Observable<any> { 

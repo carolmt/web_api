@@ -4,8 +4,15 @@ export interface Orden {
     hecho:         boolean;
     cliente:       Cliente;
     empleado:      Empleado;
-    detallesOrden: any[];
+    detallesOrden: DetallesOrden[];
     fechaorden:    Date;
+}
+
+export interface CreateOrder {
+    precioTotal:   number;
+    cliente:       Cliente;
+    empleado:      Empleado;
+    detallesOrden: DetallesOrden[];
 }
 
 export interface Empleado {
@@ -33,5 +40,12 @@ export interface Producto {
     prodId:        number;
     nomProd:       string;
     precio:        number;
-    detallesOrden: any[];
+    detallesOrden: DetallesOrden[];
 }
+
+export interface DetallesOrden {
+    producto:  Producto;
+    cantidad:  number;
+    orden:     Orden;
+}
+

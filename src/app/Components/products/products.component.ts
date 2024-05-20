@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, Reacti
 import { CommonModule } from '@angular/common';
 import SpinnerComponent from '../spinner/spinner.component';
 import { isEmpty } from 'rxjs';
-import { Categoria, Producto } from '../../Interfaces/baseDatos.interface';
+import { Categoria, DetallesOrden, Orden, Producto } from '../../Interfaces/baseDatos.interface';
 import { NavComponent } from '../nav/nav.component';
 
 @Component({
@@ -19,8 +19,18 @@ export class ProductsComponent implements OnInit{
   URL_BASE='http://localhost:8080/RestoServ/api/categorias';
   categorias: Categoria[] = [];
   productos: Producto[] = [];
+  orden: Orden[] = [];
+  detalleOrden: DetallesOrden[] = [];
+  detailForm: FormGroup;
 
-  constructor(private requestService: RequestService){}
+  constructor(private requestService: RequestService){
+    this.detailForm = new FormGroup({
+      cantidad: new FormControl(''),
+      producto: new FormControl(''),
+      orden: new FormControl('')
+    
+    })
+  }
 
   ngOnInit(): void {
     console.log('hola');
@@ -49,6 +59,49 @@ export class ProductsComponent implements OnInit{
       }
     })
   }
+
+  addProductToOrderDetail(prodId: number): void  {
+    let ordenId: number;
+    const detail: DetallesOrden = {
+        producto: { prodId: prodId } as Producto,
+        cantidad: this.detailForm.get('cantidad')?.value,
+        orden: { ordenId: ordenId = 16 } as Orden
+    };
+
+    this.requestService.postOrderDetail(detail).subscribe({
+        next: (res) => {
+            console.log('Detalle de orden agregado con éxito');
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    });
+}
+/* editCurrentVariable(): void {
+    let codeStatus: number;
+    const variables: Variable[] = [{
+      name: this.variableForm.get('name')?.value,
+      value: this.variableForm.get('value')?.value
+    }];
+    this.requestService.putUpdateCurrentVariables(variables).subscribe({
+      next: (res) => {
+        codeStatus = res.code;
+        if(codeStatus === 200) {
+          this.msgEdit = 'Variable editada correctamente.';
+      }else {
+        this.msgEdit = 'No se ha podido editar la variable.';
+      }
+    },
+    error: (err) => {
+      console.log(err);
+      this.msgEdit = 'El sistema no está encendido.';
+    }
+    });
+    this.variableForm.reset();
+  }*/
+
+
+
 
 
   /*public getProductos(): void {
