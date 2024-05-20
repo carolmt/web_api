@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ListRequestService } from '../../Services/ListRequest/list-request.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { NavComponent } from '../nav/nav.component';
 @Component({
-  selector: 'app-list-mode',
+  selector: 'app-order',
   standalone: true,
-  imports: [FormsModule , CommonModule, ReactiveFormsModule],
+  imports: [FormsModule , CommonModule, ReactiveFormsModule, NavComponent],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.css'
 })

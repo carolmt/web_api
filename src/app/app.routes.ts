@@ -1,10 +1,4 @@
 import { Routes } from '@angular/router';
-import { ProductsComponent } from './Components/products/products.component';
-import { ClientComponent } from './Components/clients/client.component';
-import { OrdersComponent } from './Components/orders/orders.component';
-import { KitchenComponent } from './Components/kitchen/kitchen.component';
-import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
-import { InicioComponent } from './Components/inicio/inicio.component';
 
 export const routes: Routes = [
   //LazyMode !!

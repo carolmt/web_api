@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { ClientComponent } from '../clients/client.component';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ProductsComponent } from '../products/products.component';
+import { KitchenComponent } from '../kitchen/kitchen.component';
+import { OrdersComponent } from '../orders/orders.component';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [ClientComponent, RouterModule, RouterOutlet],
+  imports: [ClientComponent, RouterModule, RouterOutlet, ProductsComponent, KitchenComponent, OrdersComponent],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  constructor(private router: Router) { }
 
+  navigateTo(page: string): void {
+    this.router.navigate(['/' + page]);
+  }
 }

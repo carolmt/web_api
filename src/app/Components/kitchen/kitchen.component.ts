@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ListFifoRequestService } from '../../Services/ListFifoRequest/list-fifo-request.service';
+import { NavComponent } from '../nav/nav.component';
 
 @Component({
-  selector: 'app-list-fifo-mode',
+  selector: 'app-kitchen',
   standalone: true,
-  imports: [FormsModule , CommonModule],
+  imports: [FormsModule , CommonModule, NavComponent],
   templateUrl: './kitchen.component.html',
   styleUrl: './kitchen.component.css'
 })

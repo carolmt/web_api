@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import SpinnerComponent from '../spinner/spinner.component';
 import { isEmpty } from 'rxjs';
 import { Categoria, Producto } from '../../Interfaces/baseDatos.interface';
+import { NavComponent } from '../nav/nav.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, SpinnerComponent],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, SpinnerComponent, NavComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
