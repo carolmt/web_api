@@ -30,6 +30,10 @@ export interface Cliente {
     comentario: null | string;
 }
 
+export interface OldClient {
+    telf: number;
+}
+
 export interface Categoria {
     catId:     number;
     nomCat:    string;

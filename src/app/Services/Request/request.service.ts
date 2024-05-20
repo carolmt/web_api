@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateOrder, DetallesOrden, Orden } from '../../Interfaces/baseDatos.interface';
+import { Cliente, CreateOrder, DetallesOrden, Orden } from '../../Interfaces/baseDatos.interface';
 
 const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
@@ -90,11 +90,11 @@ export class RequestService {
         //CLIENTES
 
 //Obtener cliente mediante telf
-  getClientByTelf(telf : number): Observable<Blob> {
+  getClientByTelf(telf : number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.get(URL_BASE + '/clientes/' + telf, { responseType: 'blob' }) ;
+    return this.httpClient.get(URL_BASE + '/clientes/' + telf, { headers }).pipe(res => res);
   }
 
   
@@ -120,6 +120,13 @@ export class RequestService {
   }
 
                 //CLIENTES
+  //Crear cliente
+    postNewClient(cliente: Cliente): Observable<any> {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      return this.httpClient.post(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
+    }
   
 //   //Cambio de los valores de algunas de las variables del mensaje actual
 //   putUpdateCurrentVariables(variables: Variable[]): Observable<any> { 

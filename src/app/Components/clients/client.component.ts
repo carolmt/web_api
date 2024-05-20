@@ -4,6 +4,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, Reacti
 import { CommonModule } from '@angular/common';
 import { BotonesComponent } from '../botones/botones.component';
 import { NavComponent } from '../nav/nav.component';
+import { Cliente, OldClient } from '../../Interfaces/baseDatos.interface';
+import { RequestService } from '../../Services/Request/request.service';
 
 @Component({
   selector: 'app-client',
@@ -14,169 +16,233 @@ import { NavComponent } from '../nav/nav.component';
 })
 export class ClientComponent implements OnInit{
 
-  URL_BASE='http://localhost:8080/api';
-  msgEmptyFifo = '';
-  msgCount = '';
-  colorTypes: Map<string, string> = new Map([
-    ["Todos los colores", "i"],
-    ["C1", "c1"],
-    ["C2", "c2"],
-    ["M1", "m1"],
-    ["M2", "m2"],
-    ["Y1", "y1"],
-    ["Y2", "y2"],
-    ["K1", "k1"],
-    ["K2", "k2"],
-  ]);
-  colorTypesArray = Array.from(this.colorTypes.entries());
-  numElement : number = 0;
-  img: string | undefined;
-  msgImg = '';
-  files: Element[] = [];
-  msgFifo= '';
-  msgPrint = '';
-  filesForm: FormGroup;
-  msgChargeFifo = '';
+  URL_BASE='http://localhost:8080/RestoServ/api/clientes';
+  client : Cliente[] = [];
+  oldCliente: OldClient[] = [];
+  clientForm: FormGroup;
+  clientFound = false;
 
-  constructor(private fifoResquest: FifoRequestService) { 
-    this.filesForm = new FormGroup({
-      fifoFiles: new FormArray([
-        this.createFileFormGroup()
-      ])
-    });
-  }
+  constructor(private requestService: RequestService){
+    this.clientForm = new FormGroup({
+      telf: new FormControl(''),
+      nom_cli: new FormControl(''),
+      direccion: new FormControl(''),
+      comentario: new FormControl('')
   
-  createFileFormGroup(): FormGroup {
-    return new FormGroup({
-      file: new FormControl(''),
-      vars: new FormArray([
-        this.createVariableFormGroup()
-      ])
-    });
-  }
-  
-  createVariableFormGroup(): FormGroup {
-    return new FormGroup({
-      name: new FormControl(''),
-      value: new FormControl('')
-    });
-  }
-  
-  get fifoFiles(): FormArray {
-    return this.filesForm.get('fifoFiles') as FormArray;
-  }
-  
-  addVariable(fileControl: FormGroup) {
-    const vars = fileControl.get('vars') as FormArray;
-    vars.push(this.createVariableFormGroup());
-  }
-  
-  addFile() {
-    this.fifoFiles.push(this.createFileFormGroup());
-  }
-  
-  getVars(fileControl: AbstractControl): FormArray {
-    return fileControl.get('vars') as FormArray;
-  }
-  
-  getFileControlAsFormGroup(fileControl: AbstractControl): FormGroup {
-    return fileControl as FormGroup;
+    })
+      }
+
+  ngOnInit(): void {
+   
   }
 
-ngOnInit(): void {
-    console.log('fifo');
-  }
-
-  emptyFifo():void {
-    let codeStatus: number | undefined;
-    this.fifoResquest.getEmptyFifo().subscribe({
+  lookForClient(telf: number): void  {
+    this.requestService.getClientByTelf(telf).subscribe({
       next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus === 200) {
-          this.msgEmptyFifo = 'Cola de fifo vaciada correctamente.';
+        if (res) {
+          this.client = res;
+          this.clientForm.patchValue({
+            nom_cli: res.nom_cli,
+            direccion: res.direccion,
+            comentario: res.comentario
+          });
+          this.clientFound = true;
         } else {
-          this.msgEmptyFifo = 'No se ha podido vaciar la cola de fifo.';
+          this.clientFound = false; 
         }
       },
       error: (err) => {
         console.log(err);
-        this.msgEmptyFifo = 'El sistema no está encendido.';
+        this.clientFound = false;
       }
     });
   }
 
-  countMsgs(): void {
-    let codeStatus: number | undefined;
-    this.fifoResquest.getCountMsgFifo().subscribe({
+  createOrUpdateClient(): void {
+    if (this.clientFound) {
+      // Aquí puedes añadir lógica para actualizar el cliente si es necesario
+      console.log('Cliente ya existente, actualizar si es necesario.');
+    } else {
+      const newClient: Cliente = this.clientForm.value;
+      this.createClient(newClient);
+    }
+  }
+
+  createClient(client: Cliente): void {
+    this.requestService.postNewClient(client).subscribe({
       next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgCount = 'La cola de fifo tiene ' + (res) + ' mensajes.';
-        } else {
-          this.msgCount = 'Cola de fifo vacía.';
+        if (res) {
+          this.clientForm.reset();
+          this.clientFound = false;
         }
       },
       error: (err) => {
         console.log(err);
-        this.msgCount = 'El sistema no está modo Fifo.';
       }
     });
   }
+//   msgEmptyFifo = '';
+//   msgCount = '';
+//   colorTypes: Map<string, string> = new Map([
+//     ["Todos los colores", "i"],
+//     ["C1", "c1"],
+//     ["C2", "c2"],
+//     ["M1", "m1"],
+//     ["M2", "m2"],
+//     ["Y1", "y1"],
+//     ["Y2", "y2"],
+//     ["K1", "k1"],
+//     ["K2", "k2"],
+//   ]);
+//   colorTypesArray = Array.from(this.colorTypes.entries());
+//   numElement : number = 0;
+//   img: string | undefined;
+//   msgImg = '';
+//   files: Element[] = [];
+//   msgFifo= '';
+//   msgPrint = '';
+//   filesForm: FormGroup;
+//   msgChargeFifo = '';
 
-  visualizeElement(numElement: number, color:string): void {
-    this.fifoResquest.getPrevImgColor(numElement, color).subscribe({
-      next: (res) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.img = reader.result as string;
-        };
-        if(res) {
-          reader.readAsDataURL(res);
-        } else {
-          this.msgImg = 'No se puede ver la imagen seleccionada.';   
-        }
-      },
-      error: (err) => {
-        this.msgImg = 'No se puede ver la imagen seleccionada.';
-      }
-    });
-  }
+//   constructor(private fifoResquest: FifoRequestService) { 
+//     this.filesForm = new FormGroup({
+//       fifoFiles: new FormArray([
+//         this.createFileFormGroup()
+//       ])
+//     });
+//   }
+  
+//   createFileFormGroup(): FormGroup {
+//     return new FormGroup({
+//       file: new FormControl(''),
+//       vars: new FormArray([
+//         this.createVariableFormGroup()
+//       ])
+//     });
+//   }
+  
+//   createVariableFormGroup(): FormGroup {
+//     return new FormGroup({
+//       name: new FormControl(''),
+//       value: new FormControl('')
+//     });
+//   }
+  
+//   get fifoFiles(): FormArray {
+//     return this.filesForm.get('fifoFiles') as FormArray;
+//   }
+  
+//   addVariable(fileControl: FormGroup) {
+//     const vars = fileControl.get('vars') as FormArray;
+//     vars.push(this.createVariableFormGroup());
+//   }
+  
+//   addFile() {
+//     this.fifoFiles.push(this.createFileFormGroup());
+//   }
+  
+//   getVars(fileControl: AbstractControl): FormArray {
+//     return fileControl.get('vars') as FormArray;
+//   }
+  
+//   getFileControlAsFormGroup(fileControl: AbstractControl): FormGroup {
+//     return fileControl as FormGroup;
+//   }
 
-  listMessages(): void {
+// ngOnInit(): void {
+//     console.log('fifo');
+//   }
 
-    this.fifoResquest.getMsgListFifo().subscribe({
-      next: (res) => {
-        if (res.length > 0) {
-          this.files = res;
-        }else {
-          this.files = [];
-          this.msgFifo = 'La lista de mensajes de fifo está vacía.';
-        }
-      },
-      error: (err) => {
-        this.msgFifo = 'El sistema está apagado o modo fifo desactivado.';
-      }
-    });
-  }
+//   emptyFifo():void {
+//     let codeStatus: number | undefined;
+//     this.fifoResquest.getEmptyFifo().subscribe({
+//       next: (res) => {
+//         codeStatus = res.code;
+//         if (codeStatus === 200) {
+//           this.msgEmptyFifo = 'Cola de fifo vaciada correctamente.';
+//         } else {
+//           this.msgEmptyFifo = 'No se ha podido vaciar la cola de fifo.';
+//         }
+//       },
+//       error: (err) => {
+//         console.log(err);
+//         this.msgEmptyFifo = 'El sistema no está encendido.';
+//       }
+//     });
+//   }
 
-  printNextMsg(): void {
+//   countMsgs(): void {
+//     let codeStatus: number | undefined;
+//     this.fifoResquest.getCountMsgFifo().subscribe({
+//       next: (res) => {
+//         codeStatus = res.code;
+//         if (codeStatus !== 400) {
+//           this.msgCount = 'La cola de fifo tiene ' + (res) + ' mensajes.';
+//         } else {
+//           this.msgCount = 'Cola de fifo vacía.';
+//         }
+//       },
+//       error: (err) => {
+//         console.log(err);
+//         this.msgCount = 'El sistema no está modo Fifo.';
+//       }
+//     });
+//   }
 
-    let codeStatus: number | undefined;
+//   visualizeElement(numElement: number, color:string): void {
+//     this.fifoResquest.getPrevImgColor(numElement, color).subscribe({
+//       next: (res) => {
+//         const reader = new FileReader();
+//         reader.onloadend = () => {
+//           this.img = reader.result as string;
+//         };
+//         if(res) {
+//           reader.readAsDataURL(res);
+//         } else {
+//           this.msgImg = 'No se puede ver la imagen seleccionada.';   
+//         }
+//       },
+//       error: (err) => {
+//         this.msgImg = 'No se puede ver la imagen seleccionada.';
+//       }
+//     });
+//   }
 
-    this.fifoResquest.getNextMsgFifo().subscribe({
-      next:(res) => {
-        codeStatus = res.code;
-        if (codeStatus === 200) {
-          this.msgPrint = 'Siguiente mensaje enviado correctamente.';
-        } else {
-          this.msgPrint = 'No había siguiente mensaje en cola fifo.';
-        }
-      },
-      error: (err) => {
-        this.msgPrint = 'El sistema está apagado o modo fifo desactivado.';
-      }
-  });
-}
+//   listMessages(): void {
+
+//     this.fifoResquest.getMsgListFifo().subscribe({
+//       next: (res) => {
+//         if (res.length > 0) {
+//           this.files = res;
+//         }else {
+//           this.files = [];
+//           this.msgFifo = 'La lista de mensajes de fifo está vacía.';
+//         }
+//       },
+//       error: (err) => {
+//         this.msgFifo = 'El sistema está apagado o modo fifo desactivado.';
+//       }
+//     });
+//   }
+
+//   printNextMsg(): void {
+
+//     let codeStatus: number | undefined;
+
+//     this.fifoResquest.getNextMsgFifo().subscribe({
+//       next:(res) => {
+//         codeStatus = res.code;
+//         if (codeStatus === 200) {
+//           this.msgPrint = 'Siguiente mensaje enviado correctamente.';
+//         } else {
+//           this.msgPrint = 'No había siguiente mensaje en cola fifo.';
+//         }
+//       },
+//       error: (err) => {
+//         this.msgPrint = 'El sistema está apagado o modo fifo desactivado.';
+//       }
+//   });
+// }
 
   // chargeMsgFifo(): void {
   //   let codeStatus: number = 0;

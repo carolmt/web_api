@@ -1,19 +1,24 @@
-<div class="margenes_opciones" style = "margin-top: 20px;">
+<div class="margenes_opciones" style="margin-top: 20px;">
+  <app-nav></app-nav>
 
-<app-nav></app-nav>
+  <form [formGroup]="clientForm" (ngSubmit)="createOrUpdateClient()">
+    <div class="mb-3">
+      <label for="telfInput" class="form-label">Número de teléfono</label>
+      <input type="tel" class="form-control" id="telfInput" formControlName="telf"
+             (keyup.enter)="lookForClient(clientForm.value.telf); $event.preventDefault()">
+      
+      <label for="nameInput" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="nameInput" formControlName="nom_cli">
+      
+      <label for="addressInput" class="form-label">Dirección</label>
+      <input type="text" class="form-control" id="addressInput" formControlName="direccion">
+    </div>
 
-<div class="margenes">
-<div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Número de teléfono</label>
-  <input type="tel" class="form-control" id="exampleFormControlInput1" >
-  <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-  <input type="name" class="form-control" id="exampleFormControlInput1">
-  <label for="exampleFormControlInput1" class="form-label">Dirección</label>
-  <input type="direction" class="form-control" id="exampleFormControlInput1">
-</div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Comentarios adicionales</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Datáfono"></textarea>
-</div>
-</div>
+    <div class="mb-3">
+      <label for="commentsTextarea" class="form-label">Comentarios adicionales</label>
+      <textarea class="form-control" id="commentsTextarea" rows="3" formControlName="comentario" placeholder="Datáfono"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
 </div>
