@@ -38,6 +38,18 @@ export class ProductsComponent implements OnInit{
     });
   }
 
+  getProducts(categoria: string):void {
+    this.requestService.getSpecificCategory(categoria).subscribe({
+      next: (res) => {
+        this.productos = res.productos;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+
   /*public getProductos(): void {
     this.requestService.get
   }*/
@@ -252,23 +264,7 @@ export class ProductsComponent implements OnInit{
     })
   }
 
-  visualizeImg(color: string) {
-    this.requestService.getImgFromCurrentMessage(color).subscribe({
-      next: (res) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.img = reader.result as string;
-        };
-        if (res) {
-          reader.readAsDataURL(res);
-        }
-      },
-      error: (err) => {
-        this.messageImg = 'Sistema apagado.';
-        console.log(err);
-      }
-    })
-  }
+  
 
   variablesAndValues() {
       this.requestService.getVariablesAndValues().subscribe({

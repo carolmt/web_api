@@ -1,9 +1,14 @@
 <div class="margenes_opciones" style = "margin-top: 20px;">
 
 @for(categoria of categorias; track categoria.catId) {
-  <button type="button" class="btn btn-warning boton-grande boton-separado">{{categoria.nomCat}}</button>
-
+  <button (click) ="getProducts(categoria.nomCat)"  type="button" class="btn btn-warning boton-grande boton-separado">{{categoria.nomCat}}</button>
+  
 }
+ <div class="boton-separado">
+@for(producto of productos ; track producto.prodId) {
+  <button type="button" class="btn btn-warning boton-grande boton-separado">{{producto.nomProd}}</button>
+} 
+</div>
 
 <!-- 
 <h4>Estado programa impresora</h4>
