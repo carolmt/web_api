@@ -7,10 +7,10 @@ import { NavComponent } from '../nav/nav.component';
   selector: 'app-order',
   standalone: true,
   imports: [FormsModule , CommonModule, ReactiveFormsModule, NavComponent],
-  templateUrl: './orders.component.html',
-  styleUrl: './orders.component.css'
+  templateUrl: './order.component.html',
+  styleUrl: './order.component.css'
 })
-export class OrdersComponent implements OnInit{
+export class OrderComponent implements OnInit{
 
   URL_BASE = 'http://localhost:8080/api';
   msgEmptyList = '';

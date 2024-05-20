@@ -24,10 +24,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'orders',
+    path: 'order',
     loadComponent: () =>
-      import('./Components/orders/orders.component').then(
-        (c) => c.OrdersComponent
+      import('./Components/order/order.component').then(
+        (c) => c.OrderComponent
       ),
   },
   {

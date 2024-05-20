@@ -3,12 +3,12 @@ import { ClientComponent } from '../clients/client.component';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ProductsComponent } from '../products/products.component';
 import { KitchenComponent } from '../kitchen/kitchen.component';
-import { OrdersComponent } from '../orders/orders.component';
+import { OrderComponent } from '../order/order.component';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [ClientComponent, RouterModule, RouterOutlet, ProductsComponent, KitchenComponent, OrdersComponent],
+  imports: [ClientComponent, RouterModule, RouterOutlet, ProductsComponent, KitchenComponent, OrderComponent],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
