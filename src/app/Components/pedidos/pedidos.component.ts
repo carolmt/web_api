@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
 
 @Component({
-  selector: 'app-kitchen',
+  selector: 'app-pedidos',
   standalone: true,
   imports: [NavComponent],
-  templateUrl: './kitchen.component.html',
-  styleUrl: './kitchen.component.css'
+  templateUrl: './pedidos.component.html',
+  styleUrl: './pedidos.component.css'
 })
-export class KitchenComponent {
+export class PedidosComponent {
 
 }

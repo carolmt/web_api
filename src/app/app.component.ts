@@ -6,8 +6,7 @@ import { ClientComponent } from './Components/clients/client.component';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProductsComponent } from './Components/products/products.component';
-import { KitchenComponent } from './Components/kitchen/kitchen.component';
-import { OrdersComponent } from './Components/orders/orders.component';
+import { PedidosComponent } from './Components/pedidos/pedidos.component';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +19,7 @@ import { OrdersComponent } from './Components/orders/orders.component';
     InicioComponent, 
     FlexLayoutModule, 
     ProductsComponent,
-    KitchenComponent,
-    OrdersComponent],
+  PedidosComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

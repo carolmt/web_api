@@ -23,18 +23,11 @@ export const routes: Routes = [
         (c) => c.ClientComponent
       ),
   },
-  {
-    path: 'orders',
+  {path: 'pedidos',
     loadComponent: () =>
-      import('./Components/orders/orders.component').then(
-        (c) => c.OrdersComponent
-      ),
-  },
-  {
-    path: 'kitchen',
-    loadComponent: () =>
-      import('./Components/kitchen/kitchen.component').then(
-        (c) => c.KitchenComponent
+      import('./Components/pedidos/pedidos.component').then(
+        (c) => c.PedidosComponent
+      
       ),
   },
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
