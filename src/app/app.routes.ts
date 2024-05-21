@@ -24,10 +24,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'order',
+    path: 'orders',
     loadComponent: () =>
-      import('./Components/order/order.component').then(
-        (c) => c.OrderComponent
+      import('./Components/orders/orders.component').then(
+        (c) => c.OrdersComponent
       ),
   },
   {
@@ -35,13 +35,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./Components/kitchen/kitchen.component').then(
         (c) => c.KitchenComponent
-      ),
-  },
-  {
-    path: 'settings',
-    loadComponent: () =>
-      import('./Components/settings/settings.component').then(
-        (c) => c.SettingsComponent
       ),
   },
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
