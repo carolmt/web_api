@@ -6,6 +6,7 @@ import { NavComponent } from '../nav/nav.component';
 import { Cliente, CreateOrder, EmpleadoOrder } from '../../Interfaces/baseDatos.interface';
 import { RequestService } from '../../Services/Request/request.service';
 import { AuthService } from '../../Services/AuthService/auth.service';
+import { OrderService } from '../../Services/OrdenService/orden.service';
 
 @Component({
   selector: 'app-client',
@@ -23,7 +24,7 @@ export class ClientComponent implements OnInit {
   emplId = 0;
 
 
-  constructor(private authService: AuthService, private requestService: RequestService) {
+  constructor(private authService: AuthService, private requestService: RequestService, private orderService: OrderService) {
     this.clientForm = new FormGroup({
       telf: new FormControl(''),
       nom_cli: new FormControl(''),
@@ -118,6 +119,7 @@ export class ClientComponent implements OnInit {
         this.requestService.postNewOrder(pedido).subscribe({
           next: (res) => {
             console.log(res);
+            this.orderService.setOrderId(res.ordenId);
           },
           error: (err) => {
             console.log(err);

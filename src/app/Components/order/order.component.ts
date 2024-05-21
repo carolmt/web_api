@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ListRequestService } from '../../Services/ListRequest/list-request.service';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavComponent } from '../nav/nav.component';
@@ -38,7 +37,7 @@ export class OrderComponent implements OnInit{
   filesForm: FormGroup;
   msgChargeList = '';
 
-  constructor(private listRequest: ListRequestService) { 
+  constructor() { 
     this.filesForm = new FormGroup({
       listFiles: new FormArray([
         this.createFileFormGroup()
@@ -88,92 +87,92 @@ export class OrderComponent implements OnInit{
     console.log('list');
   }
 
-  emptyList():void {
-    this.listRequest.getEmptyList().subscribe({
-      next: (res) => {
-          this.msgEmptyList = 'Lista vaciada correctamente.';
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgEmptyList ='El sistema no está encendido / Modo List desactivado.';
-      }
-    });
-  }
+  // emptyList():void {
+  //   this.listRequest.getEmptyList().subscribe({
+  //     next: (res) => {
+  //         this.msgEmptyList = 'Lista vaciada correctamente.';
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.msgEmptyList ='El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
+  // }
 
-  visualizeElement(numElement: number, color:string): void {
+  // visualizeElement(numElement: number, color:string): void {
 
-    let codeStatus: number | undefined;
+  //   let codeStatus: number | undefined;
 
-    this.listRequest.getPrevImgColor(numElement, color).subscribe({
-      next: (res) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.img = reader.result as string;
-        };
-        if(res) {
-          reader.readAsDataURL(res);
-        } else {
-          this.msgImg = 'No se puede ver la imagen seleccionada.';   
-        }
-      },
-      error: (err) => {
-        this.msgImg = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
-  }
+  //   this.listRequest.getPrevImgColor(numElement, color).subscribe({
+  //     next: (res) => {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => {
+  //         this.img = reader.result as string;
+  //       };
+  //       if(res) {
+  //         reader.readAsDataURL(res);
+  //       } else {
+  //         this.msgImg = 'No se puede ver la imagen seleccionada.';   
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.msgImg = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
+  // }
 
-  countMsgList(): void  {
-    let codeStatus: number | undefined;
-    this.listRequest.getCountMsgList().subscribe({
-      next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgCount = 'La lista tiene ' + (res) + ' mensajes.';
-        } else {
-          this.msgCount = 'Lista vacía.';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgCount = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
-  }
+  // countMsgList(): void  {
+  //   let codeStatus: number | undefined;
+  //   this.listRequest.getCountMsgList().subscribe({
+  //     next: (res) => {
+  //       codeStatus = res.code;
+  //       if (codeStatus !== 400) {
+  //         this.msgCount = 'La lista tiene ' + (res) + ' mensajes.';
+  //       } else {
+  //         this.msgCount = 'Lista vacía.';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.msgCount = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
+  // }
 
-  listMessages(): void {
+  // listMessages(): void {
 
-    this.listRequest.getMsgList().subscribe({
-      next: (res) => {
-        if (res.length > 0) {
-          this.files = res;
-        }else {
-          this.files = [];
-          this.msgList = 'La lista de mensajes está vacía.';
-        }
-      },
-      error: (err) => {
-        this.msgList = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
-  }
+  //   this.listRequest.getMsgList().subscribe({
+  //     next: (res) => {
+  //       if (res.length > 0) {
+  //         this.files = res;
+  //       }else {
+  //         this.files = [];
+  //         this.msgList = 'La lista de mensajes está vacía.';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.msgList = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
+  // }
 
-  printSelected(num: number): void {
-    let codeStatus: number | undefined;
-    this.listRequest.getPrintSelected(num).subscribe({
-      next: (res) => {
-        codeStatus = res.code;
-        if (codeStatus !== 400) {
-          this.msgPrint = 'Se ha mandado a imprimir el mensaje seleccionado.';
-        } else {
-          this.msgPrint = 'No existe el mensaje seleccionado.';
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.msgPrint = 'El sistema no está encendido / Modo List desactivado.';
-      }
-    });
-  }
+  // printSelected(num: number): void {
+  //   let codeStatus: number | undefined;
+  //   this.listRequest.getPrintSelected(num).subscribe({
+  //     next: (res) => {
+  //       codeStatus = res.code;
+  //       if (codeStatus !== 400) {
+  //         this.msgPrint = 'Se ha mandado a imprimir el mensaje seleccionado.';
+  //       } else {
+  //         this.msgPrint = 'No existe el mensaje seleccionado.';
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.msgPrint = 'El sistema no está encendido / Modo List desactivado.';
+  //     }
+  //   });
+  // }
 
   // chargeMsgList(): void {
   //   let codeStatus: number = 0;

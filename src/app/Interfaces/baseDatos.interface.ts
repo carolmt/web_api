@@ -56,8 +56,15 @@ export interface Producto {
 }
 
 export interface DetallesOrden {
-    producto:  Producto;
+    producto:  ProductoOrder;
     cantidad:  number;
-    orden:     Orden;
+    orden:     OrdenOder;
 }
 
+export interface ProductoOrder {
+    prodId: number;
+}
+
+export interface OrdenOder  {
+    ordenId: number;
+}
