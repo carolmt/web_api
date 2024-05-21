@@ -1,28 +1,24 @@
 <h1 class="text-center">PEDIDOS</h1>
 
-<div class="container text-center">
-  <div class="row align-items-start">
-    <div class="col">
-      CLIENTE
-    </div>
-    <div class="col">
-      PEDIDO
-    </div>
-    <div class="col">
-      FECHA
-    </div>
-  </div>
-
-  @for(pedido of pedidos ; track pedido.ordenId) {
-    <div class="col">
-      {{pedido.cliente.telf}}
-    </div>
-    <div class="col">
-      {{pedido.ordenId}}
-    </div>
-    <div class="col">
-      {{dateFormatter(pedido.fechaorden)}}
-    </div>
-}
-  </div>
-
+  <table class="tabla">
+    <caption class="titulo">
+      Información Pedidos
+    </caption>
+    <thead>
+      <tr>
+        <th class="tabla_encabezados">CLIENTE</th>
+        <th class="tabla_encabezados">PEDIDO</th>
+        <th class="tabla_encabezados">FECHA</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (pedido of pedidos ; track pedido.ordenId) {
+      <tr>
+        <td>{{pedido.cliente.telf}}</td>
+        <td>{{ pedido.detallesOrden }}</td>
+        <td>{{ dateFormatter(pedido.fechaorden) }}</td>
+      
+      </tr>
+      }
+    </tbody>
+  </table>
