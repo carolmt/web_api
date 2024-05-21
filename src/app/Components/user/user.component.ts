@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequestService } from '../../Services/Request/request.service';
 import { Empleado, Orden } from '../../Interfaces/baseDatos.interface';
+import { AuthService } from '../../Services/AuthService/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ import { Empleado, Orden } from '../../Interfaces/baseDatos.interface';
   styleUrl: './user.component.css'
 })
 export class UserComponent implements OnInit {
-  URL_BASE='http://localhost:8080/RestoServ/api/empleados';
+
   isLoggedIn = false;
   styleImage = 'pizza';
 
@@ -26,10 +27,11 @@ export class UserComponent implements OnInit {
   nameEmpl = '';
   form : FormGroup;
   mssgAuth = '';
-  empleado: Empleado[] = [];
+  empleado: Empleado| null = null;
+  emplId = 0;
 
 
-  constructor(private formBuilder: FormBuilder, private requestService : RequestService){
+  constructor(private formBuilder: FormBuilder, private requestService : RequestService, private authService: AuthService){
     this.form = new FormGroup({
       codigo: new FormControl(''),
       nomEmpl: new FormControl('')
@@ -40,12 +42,9 @@ export class UserComponent implements OnInit {
     console.log('UserComponent');
   }
 
-  /* ESTA FUNCION ES ACTIVADA POR EL NGSTYLE */
   unsplashClass(): any {
     return {
       'min-height': '100%',
-      /* LLAMADA RANDOMICA AL SERVICIO DE IMAGENES DE UNSPLASH - CON IMAGENES DE TAMAÑO 1200X900 */
-      /*SE LE AÑADE LA VARIABLE DE styleUrls PARA ESTABLECER LA TEMATICA*/
       background: `url("https://source.unsplash.com/random/1200x900?"${this.styleImage}) no-repeat center center`,
       'background-size': 'cover',
       position: 'relative',
@@ -61,7 +60,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  iniciarSesion() {
+  iniciarSesion():void {
     let codeStatus = 0;
       this.requestService.getEmployeeByCodeAndName(this.codeEmpl, this.nameEmpl).subscribe({
         next: (res) => {
@@ -69,6 +68,9 @@ export class UserComponent implements OnInit {
           if(codeStatus !== 400){
             this.isLoggedIn = true;
             this.mssgAuth = '';
+            this.empleado = res; // Guardar el empleado recibido de la respuesta
+            this.emplId = res.emplId; // Guardar el emplId del empleado
+            this.authService.login(res);
           } else {
               this.mssgAuth = 'Nombre o código de usuario incorrecto.'
           } 

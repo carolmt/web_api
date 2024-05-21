@@ -9,10 +9,13 @@ export interface Orden {
 }
 
 export interface CreateOrder {
-    precioTotal:   number;
-    cliente:       Cliente;
-    empleado:      Empleado;
+    cliente:       ClienteOrder;
+    empleado:      EmpleadoOrder;
     detallesOrden: DetallesOrden[];
+}
+
+export interface ClienteOrder {
+    telf: number;
 }
 
 export interface Empleado {
@@ -21,6 +24,11 @@ export interface Empleado {
     nomEmpl:      string;
     apellidoEmpl: string;
     ordenes?:     Orden[];
+}
+
+export interface EmpleadoOrder {
+    emplId: number;
+
 }
 
 export interface Cliente {

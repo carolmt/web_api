@@ -116,7 +116,7 @@ export class RequestService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    return this.httpClient.post(URL_BASE + '/ordenes', order, { headers }).pipe(res => res);
+    return this.httpClient.post(URL_BASE + '/ordenes/createOrder', order, { headers }).pipe(res => res);
   }
 
                 //CLIENTES
@@ -126,6 +126,14 @@ export class RequestService {
         'Content-Type': 'application/json; charset=UTF-8',
       });
       return this.httpClient.post(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
+    }
+
+    //Actualizar cliente
+    putUpdateClient(cliente: Cliente): Observable<any> {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      return this.httpClient.put(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
     }
   
 //   //Cambio de los valores de algunas de las variables del mensaje actual

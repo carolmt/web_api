@@ -1,46 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { FifoRequestService } from '../../Services/FifoRequest/fifo-request.service';
-import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BotonesComponent } from '../botones/botones.component';
 import { NavComponent } from '../nav/nav.component';
-import { Cliente, OldClient } from '../../Interfaces/baseDatos.interface';
+import { Cliente, CreateOrder, EmpleadoOrder } from '../../Interfaces/baseDatos.interface';
 import { RequestService } from '../../Services/Request/request.service';
+import { AuthService } from '../../Services/AuthService/auth.service';
 
 @Component({
   selector: 'app-client',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule, BotonesComponent, NavComponent],
   templateUrl: './client.component.html',
-  styleUrl: './client.component.css'
+  styleUrls: ['./client.component.css']
 })
-export class ClientComponent implements OnInit{
+export class ClientComponent implements OnInit {
 
-  URL_BASE='http://localhost:8080/RestoServ/api/clientes';
-  client : Cliente[] = [];
-  oldCliente: OldClient[] = [];
+  cliente: Cliente| null = null;
+  empl: EmpleadoOrder | null = null;
   clientForm: FormGroup;
   clientFound = false;
+  emplId = 0;
 
-  constructor(private requestService: RequestService){
+
+  constructor(private authService: AuthService, private requestService: RequestService) {
     this.clientForm = new FormGroup({
       telf: new FormControl(''),
       nom_cli: new FormControl(''),
       direccion: new FormControl(''),
       comentario: new FormControl('')
-  
-    })
-      }
-
-  ngOnInit(): void {
-   
+    });
   }
 
-  lookForClient(telf: number): void  {
+  ngOnInit(): void { 
+    this.authService.empleado$.subscribe(empl => {
+      this.empl = empl;
+    });
+    console.log('codigo: ' + this.empl?.emplId)
+  }
+
+  lookForClient(telf: number): void {
     this.requestService.getClientByTelf(telf).subscribe({
       next: (res) => {
         if (res) {
-          this.client = res;
+          this.cliente = res;
           this.clientForm.patchValue({
             nom_cli: res.nom_cli,
             direccion: res.direccion,
@@ -48,8 +51,28 @@ export class ClientComponent implements OnInit{
           });
           this.clientFound = true;
         } else {
-          this.clientFound = false; 
+          this.clientFound = false;
+          this.clientForm.patchValue({ telf });
         }
+      },
+      error: (err) => {
+        console.log(err);
+        this.clientFound = false;
+        this.clientForm.patchValue({ telf });
+      }
+    });
+  }
+
+  updateClient(cliente: Cliente): void {
+    this.requestService.putUpdateClient(cliente).subscribe({
+      next: (res) => {
+        this.cliente = res;
+        this.clientForm.patchValue({
+          nom_cli: res.nom_cli,
+          direccion: res.direccion,
+          comentario: res.comentario
+        });
+        this.clientFound = true;
       },
       error: (err) => {
         console.log(err);
@@ -60,16 +83,16 @@ export class ClientComponent implements OnInit{
 
   createOrUpdateClient(): void {
     if (this.clientFound) {
-      // Aquí puedes añadir lógica para actualizar el cliente si es necesario
       console.log('Cliente ya existente, actualizar si es necesario.');
+      this.updateClient(this.clientForm.value);
     } else {
       const newClient: Cliente = this.clientForm.value;
       this.createClient(newClient);
     }
   }
 
-  createClient(client: Cliente): void {
-    this.requestService.postNewClient(client).subscribe({
+  createClient(cliente: Cliente): void {
+    this.requestService.postNewClient(cliente).subscribe({
       next: (res) => {
         if (res) {
           this.clientForm.reset();
@@ -81,6 +104,30 @@ export class ClientComponent implements OnInit{
       }
     });
   }
+
+  createEmptyOrder(): void {
+
+      let telf = this.clientForm.value.telf;
+      let emplId = this.empl?.emplId || 0;
+
+        const pedido: CreateOrder = {
+          cliente: { telf: telf }, // Usar el teléfono del formulario para el cliente
+          empleado: { emplId: emplId }, // Usar el ID del empleado
+          detallesOrden: [] // Inicializar los detalles de la orden si es necesario
+        };
+        this.requestService.postNewOrder(pedido).subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+    
+  }
+}
+
+
 //   msgEmptyFifo = '';
 //   msgCount = '';
 //   colorTypes: Map<string, string> = new Map([
@@ -284,4 +331,3 @@ export class ClientComponent implements OnInit{
   //     ])
   //   });
   // }
-}
