@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
 import { RequestService } from '../../Services/Request/request.service';
-import { Orden } from '../../Interfaces/baseDatos.interface';
+import { DetallesInfo, OrdenInfo } from '../../Interfaces/baseDatos.interface';
 
 @Component({
   selector: 'app-pedidos',
@@ -12,7 +12,8 @@ import { Orden } from '../../Interfaces/baseDatos.interface';
 })
 export class PedidosComponent implements OnInit {
 
-  pedidos: Orden[] = [];
+  pedidos: OrdenInfo[] = [];
+  detallesOrden: DetallesInfo[] = [];
 
   constructor(private requestService: RequestService) {
 
@@ -26,6 +27,7 @@ export class PedidosComponent implements OnInit {
     this.requestService.getAllOrders().subscribe({
       next: (res) => {
         this.pedidos = res;
+        this.detallesOrden = res[0].detallesOrden;
         console.log(res);
       },
       error: (err) => {

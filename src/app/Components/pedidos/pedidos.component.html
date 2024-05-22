@@ -1,24 +1,32 @@
-<h1 class="text-center">PEDIDOS</h1>
-
-  <table class="tabla">
-    <caption class="titulo">
-      Información Pedidos
-    </caption>
-    <thead>
-      <tr>
-        <th class="tabla_encabezados">CLIENTE</th>
-        <th class="tabla_encabezados">PEDIDO</th>
-        <th class="tabla_encabezados">FECHA</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (pedido of pedidos ; track pedido.ordenId) {
-      <tr>
-        <td>{{pedido.cliente.telf}}</td>
-        <td>{{ pedido.detallesOrden }}</td>
-        <td>{{ dateFormatter(pedido.fechaorden) }}</td>
-      
-      </tr>
-      }
-    </tbody>
-  </table>
+<div class="margenes_opciones">
+  
+  <p class="titulo">
+    Información Pedidos
+  </p>
+</div>
+<table class="tabla">
+  <thead>
+    <tr>
+      <th class="tabla_encabezados">CLIENTE</th>
+      <th class="tabla_encabezados">PEDIDO</th>
+      <th class="tabla_encabezados">PRECIO</th>
+      <th class="tabla_encabezados">FECHA</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (pedido of pedidos ; track pedido.ordenId) {
+    <tr>
+      <td>{{ pedido.cliente.telf }}</td>
+      <td>
+        <ul>
+          @for (detalle of pedido.detallesOrden; track detalle.detalleId) {
+          <li>{{ detalle.producto.nomProd}}</li>
+          }
+        </ul>
+      </td>
+      <td>{{pedido.precioTotal}}</td>
+      <td>{{ dateFormatter(pedido.fechaorden) }}</td>
+    </tr>
+    }
+  </tbody>
+</table>

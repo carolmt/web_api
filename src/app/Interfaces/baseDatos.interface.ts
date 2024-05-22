@@ -8,6 +8,16 @@ export interface Orden {
     fechaorden:    Date;
 }
 
+export interface OrdenInfo {
+    ordenId: number;
+    precioTotal: number;
+    hecho: boolean;
+    cliente: Cliente;
+    empleado: Empleado;
+    detallesOrden: DetallesInfo[];
+    fechaorden: Date;
+}
+
 export interface CreateOrder {
     cliente:       ClienteOrder;
     empleado:      EmpleadoOrder;
@@ -60,6 +70,12 @@ export interface DetallesOrden {
     cantidad:  number;
     orden:     OrdenOder;
 }
+
+export interface DetallesInfo {
+    detalleId: number;
+    producto: Producto;
+}
+
 
 export interface ProductoOrder {
     prodId: number;
