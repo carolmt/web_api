@@ -69,12 +69,20 @@ export class ProductsComponent implements OnInit{
       return;
     }
 
+    // Encuentra el producto por su id
+    const producto = this.productos.find(p => p.prodId === prodId);
+    if (!producto) {
+      console.error('Producto no encontrado');
+      return;
+    }
+    
     const detail: DetallesOrden = {
-      producto: { prodId: prodId, precio: this.productos[prodId].precio },
+      
+      producto: { prodId: prodId, precio: producto.precio },
       cantidad: 1,
       orden: { ordenId: this.ordenId }
     };
-
+    
     this.requestService.postOrderDetail(detail).subscribe({
       next: (res) => {
         console.log('Detalle de orden agregado con éxito');

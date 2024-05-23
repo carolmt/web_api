@@ -4,7 +4,7 @@
   <form [formGroup]="clientForm" (ngSubmit)="createOrUpdateClient()">
     <div class="mb-3">
       <label for="telfInput" class="form-label">Número de teléfono</label>
-      <input type="tel" class="form-control" id="telfInput" formControlName="telf">
+      <input type="tel" class="form-control" id="telfInput" formControlName="telf" (keydown)="preventEnter($event)">
       <button type="button" (click)="lookForClient(clientForm.value.telf)" class="btn btn-secondary">Buscar</button>
       <p class="text-danger">{{ msgClientFound }}</p>
     </div>
