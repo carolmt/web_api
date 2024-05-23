@@ -1,1 +1,27 @@
-<p>cocina works!</p>
+<table class="table table-dark table-striped margen">
+    <thead>
+        <tr>
+          <th scope="col">Num pedido</th>
+          <th scope="col">Pedido</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+    
+      <tbody class="table-group-divider">
+        @for (pedido of pedidos ; track pedido.ordenId) {
+            <tr>
+              <td>{{ pedido.ordenId }}</td>
+              <td>
+                <ul>
+                  @for (detalle of pedido.detallesOrden; track detalle.detalleId) {
+                  <li>{{ detalle.producto.nomProd}}</li>
+                  }
+                </ul>
+              </td>
+              <td>
+                <button (click)="removePedido(pedido.ordenId)">Hecho</button>
+              </td>
+            </tr>
+            }
+          </tbody>
+    </table>

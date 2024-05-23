@@ -7,6 +7,7 @@ import { InicioComponent } from './Components/inicio/inicio.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProductsComponent } from './Components/products/products.component';
 import { PedidosComponent } from './Components/pedidos/pedidos.component';
+import { CocinaComponent } from './Components/cocina/cocina.component';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ import { PedidosComponent } from './Components/pedidos/pedidos.component';
     InicioComponent, 
     FlexLayoutModule, 
     ProductsComponent,
-  PedidosComponent],
+    PedidosComponent, 
+    CocinaComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

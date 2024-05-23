@@ -79,6 +79,7 @@ export interface DetallesInfo {
 
 export interface ProductoOrder {
     prodId: number;
+    precio: number;
 }
 
 export interface OrdenOder  {

@@ -70,7 +70,7 @@ export class ProductsComponent implements OnInit{
     }
 
     const detail: DetallesOrden = {
-      producto: { prodId: prodId },
+      producto: { prodId: prodId, precio: this.productos[prodId].precio },
       cantidad: 1,
       orden: { ordenId: this.ordenId }
     };

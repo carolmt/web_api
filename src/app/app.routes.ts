@@ -30,5 +30,12 @@ export const routes: Routes = [
       
       ),
   },
+  {
+    path: 'cocina',
+    loadComponent: () =>
+      import('./Components/cocina/cocina.component').then(
+        (c) => c.CocinaComponent
+      ),
+  },
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 ];

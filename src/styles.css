@@ -1,8 +1,12 @@
 .margenes_opciones {
+    margin-right: 50px;
     margin-left: 50px;
     margin-top: 40px;
-    margin-right: 50px;
     position: relative;
+}
+
+.margen {
+    padding: auto;
 }
     .btn-primary {
         margin-top: 10px;
