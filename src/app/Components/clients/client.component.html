@@ -6,6 +6,7 @@
       <label for="telfInput" class="form-label">Número de teléfono</label>
       <input type="tel" class="form-control" id="telfInput" formControlName="telf">
       <button type="button" (click)="lookForClient(clientForm.value.telf)" class="btn btn-secondary">Buscar</button>
+      <p class="text-danger">{{ msgClientFound }}</p>
     </div>
 
     <div class="mb-3">
@@ -22,6 +23,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Enviar</button>
-    <button type="button" class="btn btn-primary" [disabled]="!clientFound" (click)="createEmptyOrder()">Crear pedido</button>
+    <button type="button" class="btn btn-primary" [disabled]="!clientFound" (click)="createEmptyOrder(); navigateToProducts()">Crear pedido</button>
   </form>
 </div>

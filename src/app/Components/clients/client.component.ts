@@ -7,11 +7,13 @@ import { Cliente, CreateOrder, EmpleadoOrder } from '../../Interfaces/baseDatos.
 import { RequestService } from '../../Services/Request/request.service';
 import { AuthService } from '../../Services/AuthService/auth.service';
 import { OrderService } from '../../Services/OrdenService/orden.service';
+import { Router, RouterOutlet } from '@angular/router';
+import { ProductsComponent } from '../products/products.component';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, BotonesComponent, NavComponent],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, BotonesComponent, NavComponent, RouterOutlet, ProductsComponent,],
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
@@ -22,9 +24,10 @@ export class ClientComponent implements OnInit {
   clientForm: FormGroup;
   clientFound = false;
   emplId = 0;
+  msgClientFound = '';
 
 
-  constructor(private authService: AuthService, private requestService: RequestService, private orderService: OrderService) {
+  constructor(private router: Router, private authService: AuthService, private requestService: RequestService, private orderService: OrderService) {
     this.clientForm = new FormGroup({
       telf: new FormControl(''),
       nom_cli: new FormControl(''),
@@ -40,6 +43,10 @@ export class ClientComponent implements OnInit {
     console.log('codigo: ' + this.empl?.emplId)
   }
 
+  navigateToProducts(): void {
+    this.router.navigate(['/products']);
+  }
+
   lookForClient(telf: number): void {
     this.requestService.getClientByTelf(telf).subscribe({
       next: (res) => {
@@ -52,6 +59,7 @@ export class ClientComponent implements OnInit {
           });
           this.clientFound = true;
         } else {
+          this.msgClientFound = 'Cliente no encontrado, por favor, rellene los campos.';
           this.clientFound = false;
           this.clientForm.patchValue({ telf });
         }

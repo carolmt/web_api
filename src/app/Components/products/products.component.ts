@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit{
     })
   }
 
-  addProductToOrderDetail(prodId: number): void {
+  addProductToOrderDetail(prodId: number, cantidad: number): void {
     if (!this.ordenId) {
       console.error('No se ha establecido ninguna orden ID');
       return;
@@ -71,7 +71,7 @@ export class ProductsComponent implements OnInit{
 
     const detail: DetallesOrden = {
       producto: { prodId: prodId },
-      cantidad: this.detailForm.get('cantidad')?.value,
+      cantidad: cantidad,
       orden: { ordenId: this.ordenId }
     };
 
@@ -83,5 +83,10 @@ export class ProductsComponent implements OnInit{
         console.log(err);
       }
     });
+  }
+
+  moreProduct(producto: any):void {
+    producto.cantidad++;
+    this.detailForm.get('cantidad')?.setValue(producto.cantidad);
   }
 }

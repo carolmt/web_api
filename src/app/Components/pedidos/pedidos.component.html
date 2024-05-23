@@ -16,7 +16,12 @@
   <tbody>
     @for (pedido of pedidos ; track pedido.ordenId) {
     <tr>
-      <td>{{ pedido.cliente.telf }}</td>
+      <td>
+        <ul>
+          <li>{{ pedido.cliente.nom_cli }}</li>
+          <li>{{ pedido.cliente.telf }}</li>
+        </ul>
+      </td>
       <td>
         <ul>
           @for (detalle of pedido.detallesOrden; track detalle.detalleId) {
