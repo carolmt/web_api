@@ -62,7 +62,6 @@ export interface Producto {
     prodId:        number;
     nomProd:       string;
     precio:        number;
-    cantidad:     number;
     detallesOrden: DetallesOrden[];
 }
 

@@ -8,12 +8,9 @@
 }
  <div class="boton-separado">
 @for(producto of productos ; track producto.prodId) {
-  <button (click)="addProductToOrderDetail(producto.prodId, producto.cantidad)" type="button" class="btn btn-warning boton-grande boton-separado">{{producto.nomProd}}</button>
-  <div>
-    Cantidad: {{producto.cantidad}}
-    <button (click)="moreProduct(producto)" type="button" class="btn btn-warning boton-grande boton-separado">+</button>
-  </div>
+  <button (click)="addProductToOrderDetail(producto.prodId)" type="button" class="btn btn-warning boton-grande boton-separado">{{producto.nomProd}}</button>
 } 
 </div>
+
 
 </div> 
