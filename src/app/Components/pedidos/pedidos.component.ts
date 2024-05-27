@@ -46,4 +46,16 @@ export class PedidosComponent implements OnInit {
 
     return `${day}-${month} ${hours}:${minutes}`;
   }
+
+  deleteOrder(id: number): void {
+  this.requestService.deleteOrderById(id).subscribe({
+    next: (res) => {
+      console.log(res);
+      this.allOrders();
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
+  }
 }

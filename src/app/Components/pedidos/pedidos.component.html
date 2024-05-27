@@ -1,19 +1,14 @@
-<div class="margenes_opciones">
-  
-  <p class="titulo">
-    Información Pedidos
-  </p>
-</div>
-<table class="tabla">
+<table class="table table-dark table-striped margen">
   <thead>
     <tr>
       <th class="tabla_encabezados">CLIENTE</th>
       <th class="tabla_encabezados">PEDIDO</th>
       <th class="tabla_encabezados">PRECIO</th>
       <th class="tabla_encabezados">FECHA</th>
+      <th class="tabla_encabezados">ACCIONES</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     @for (pedido of pedidos ; track pedido.ordenId) {
     <tr>
       <td>
@@ -31,6 +26,13 @@
       </td>
       <td>{{pedido.precioTotal}}</td>
       <td>{{ dateFormatter(pedido.fechaorden) }}</td>
+      <td>
+        <div style="margin-bottom: 5px;">
+        <button (click)="deleteOrder(pedido.ordenId)" class="btn btn-warning">Cancelar pedido</button>
+      </div>
+      <div>
+        <button (click)="deleteOrder(pedido.ordenId)" class="btn btn-warning">Entregado</button></div>
+      </td>
     </tr>
     }
   </tbody>

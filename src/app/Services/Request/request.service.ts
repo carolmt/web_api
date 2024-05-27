@@ -136,29 +136,15 @@ export class RequestService {
       return this.httpClient.put(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
     }
   
-//   //Cambio de los valores de algunas de las variables del mensaje actual
-//   putUpdateCurrentVariables(variables: Variable[]): Observable<any> { 
-//     const headers = new HttpHeaders({
-//       'Content-Type' : 'application/json; charset=UTF-8',
-//     });
-//     return this.httpClient.put(URL_BASE + '/vars', variables,{headers}).pipe(res => res);
-//   }
+            /**METODOS DELETE */
 
-//   //Cambio del mensaje actual y sus variables
-//   putNewMsgAndVariables(file: ChargeFile): Observable<any> {
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json; charset=UTF-8',
-//     });
-//     return this.httpClient.put(URL_BASE + '/impr', file, { headers }).pipe(res => res);
-//   }
-
-//   //Escribe una lista de valores en los registros del PLC
-//   putListOfValuesPlc(registros: PLC3[]): Observable<any> {
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json; charset=UTF-8',
-//     });
-//     return this.httpClient.put(URL_BASE + '/plcwrt', registros, { headers }).pipe(res => res);
-//   }
-  
+    //ORDENES
+    //Eliminar orden por id
+    deleteOrderById(ord_id: number): Observable<any> {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      return this.httpClient.delete(URL_BASE + '/ordenes/deleteOrder/'+ord_id, { headers }).pipe(res => res);
+    }
 }
  
