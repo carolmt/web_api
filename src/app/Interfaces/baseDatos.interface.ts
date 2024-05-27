@@ -8,6 +8,11 @@ export interface Orden {
     fechaorden:    Date;
 }
 
+export interface OrdenDone {
+    ordenId: number;
+    hecho:   boolean;
+}
+
 export interface OrdenInfo {
     ordenId: number;
     precioTotal: number;

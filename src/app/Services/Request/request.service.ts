@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cliente, CreateOrder, DetallesOrden, Orden } from '../../Interfaces/baseDatos.interface';
+import { Cliente, CreateOrder, DetallesOrden, Orden, OrdenDone } from '../../Interfaces/baseDatos.interface';
 
 const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
@@ -87,6 +87,14 @@ export class RequestService {
       return this.httpClient.get(URL_BASE + '/ordenes/'+ord_id, { headers }).pipe(res => res);
   }
 
+  //Obtener ordenes no hechas
+  getOrdersNotDone(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+    return this.httpClient.get(URL_BASE + '/ordenes/undone', { headers }).pipe(res => res);
+  }
+
         //CLIENTES
 
 //Obtener cliente mediante telf
@@ -128,12 +136,21 @@ export class RequestService {
       return this.httpClient.post(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
     }
 
+            /**METODOS PUT */
+
     //Actualizar cliente
     putUpdateClient(cliente: Cliente): Observable<any> {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       });
       return this.httpClient.put(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
+    }
+    //Actualizar orden
+    putUpdateOrder(ordenId: number, order: OrdenDone): Observable<any> {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      return this.httpClient.put(URL_BASE + '/ordenes/updateOrder/'+ordenId, order, { headers }).pipe(res => res);
     }
   
             /**METODOS DELETE */

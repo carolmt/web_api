@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DetallesInfo, Orden, OrdenInfo } from '../../Interfaces/baseDatos.interface';
+import { DetallesInfo, Orden, OrdenDone, OrdenInfo } from '../../Interfaces/baseDatos.interface';
 import { RequestService } from '../../Services/Request/request.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class CocinaComponent implements OnInit{
 }
 
 allOrders():void {
-  this.requestService.getAllOrders().subscribe({
+  this.requestService.getOrdersNotDone().subscribe({
     next: (res) => {
       this.pedidos = res;
       this.detallesOrden = res[0].detallesOrden;
@@ -40,5 +40,23 @@ removePedido(ordenId: number) {
   if (index > -1) {
     this.pedidos.splice(index, 1);
   }
+}
+
+orderDone(ordenId: number) {
+
+  const pedido: OrdenDone = {
+    ordenId: ordenId,
+    hecho: true
+  }
+
+  this.requestService.putUpdateOrder(ordenId, pedido).subscribe({
+    next: (res) => {
+      console.log(res);
+      this.pedido = res;
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
 }
 }
