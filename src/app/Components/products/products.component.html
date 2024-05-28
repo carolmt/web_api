@@ -1,16 +1,15 @@
 <div class="margenes_opciones" style = "margin-top: 20px;">
 
   <app-nav></app-nav>
-
+  <div class="flex-container">
 @for(categoria of categorias; track categoria.catId) {
-  <button (click) ="getProducts(categoria.nomCat)"  type="button" class="btn btn-warning boton-grande boton-separado">{{categoria.nomCat}}</button>
-  
-}
- <div class="boton-separado">
-@for(producto of productos ; track producto.prodId) {
-  <button (click)="addProductToOrderDetail(producto.prodId)" type="button" class="btn btn-warning boton-grande boton-separado">{{producto.nomProd}}</button>
+  <button (click) ="getProducts(categoria.nomCat)"  type="button" class=" boton-grande boton-separado">{{categoria.nomCat}}</button>
 } 
 </div>
 
-
+<div class="flex-container">
+@for(producto of productos ; track producto.prodId) {
+  <button (click)="addProductToOrderDetail(producto.prodId)" type="button" class=" boton-grande boton-separado">{{producto.nomProd}}</button>
+} 
 </div> 
+</div>

@@ -20,7 +20,7 @@ import { AuthService } from '../../Services/AuthService/auth.service';
 export class UserComponent implements OnInit {
 
   isLoggedIn = false;
-  styleImage = 'pizza';
+  styleImage = 'food';
 
   //gestion inicio sesion
   codeEmpl= 0;

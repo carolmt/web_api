@@ -28,27 +28,53 @@
     margin-left: 50px;
     margin-right: 50px;
 }
+
+.custom-link {
+    color: rgb(248, 170, 64); /* Cambia el color del enlace */
+    text-decoration: none; /* Elimina el subrayado si lo deseas */
+    font-weight: 550; /* Ajusta el peso de la fuente para hacerla más gruesa */
+}
+
+.custom-link:hover {
+    color: rgb(248, 170, 64); /* Cambia el color del enlace al pasar el mouse */
+    text-decoration: underline; /* Añade subrayado al pasar el mouse si lo deseas */
+}
     
 .boton-grande {
     
-    font-size: 30px; /* Ajusta el tamaño del texto */
+    color:rgb(248, 170, 64);
+  font-weight:700;
+  letter-spacing:1px;
+  border:none;
+  font-size:40px; /* Ajusta el tamaño del texto */
     padding: 40px 60px; /* Ajusta el tamaño del botón, puedes modificar los valores para que se vea como deseas */
     margin: 15px; /* Espacio alrededor de cada botón */
+    transition:all .5s ease-in-out;
+    
 }
-
+.boton-grande:hover {
+    background-color:rgb(248, 170, 64);
+    color: rgb(13, 13, 13);
+}
 /* Clase para agregar un margen entre los botones */
 .boton-separado {
-    
+    background-color: rgb(13, 13, 13);
     align-items: center; /* Centra los botones verticalmente */
     margin-right: 30px; /* Espaciado a la derecha de 30px */
     margin-top: 40px;
     top: 50%;
     left: 50%;
 }
-/* You can add global styles to this file, and also import other style files */
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones pasen a la siguiente línea si no caben en una */
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: flex-start; /* Alinea los botones al inicio */
+}
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 .titulo {
     color: black;
     font-size: 40px;
