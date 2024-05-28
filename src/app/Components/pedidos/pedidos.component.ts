@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../nav/nav.component';
 import { RequestService } from '../../Services/Request/request.service';
 import { DetallesInfo, OrdenInfo } from '../../Interfaces/baseDatos.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pedidos',
   standalone: true,
-  imports: [NavComponent],
+  imports: [NavComponent, CommonModule],
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.css'
 })

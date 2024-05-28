@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  //LazyMode !!
   {
     path: 'inicio',
     loadComponent: () =>
@@ -23,11 +22,11 @@ export const routes: Routes = [
         (c) => c.ClientComponent
       ),
   },
-  {path: 'pedidos',
+  {
+    path: 'pedidos',
     loadComponent: () =>
       import('./Components/pedidos/pedidos.component').then(
         (c) => c.PedidosComponent
-      
       ),
   },
   {
