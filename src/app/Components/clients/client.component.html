@@ -1,11 +1,10 @@
-<div class="margenes_opciones" style="margin-top: 20px;">
   <app-nav></app-nav>
-
+  <div class="margenes_opciones" style="margin-top: 20px;">
   <form [formGroup]="clientForm" (ngSubmit)="createOrUpdateClient()">
     <div class="mb-3">
       <label for="telfInput" class="form-label">Número de teléfono</label>
       <input type="tel" class="form-control" id="telfInput" formControlName="telf" (keydown)="preventEnter($event)">
-      <button type="button" (click)="lookForClient(clientForm.value.telf)" class="btn btn-secondary">Buscar</button>
+      <button type="button" (click)="lookForClient(clientForm.value.telf)" class="btn btn-primary">Buscar</button>
       <p class="text-danger">{{ msgClientFound }}</p>
     </div>
 
