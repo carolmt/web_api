@@ -58,4 +58,16 @@ export class PedidosComponent implements OnInit {
     }
   });
   }
+
+  getTotalPrice(ordenId: number): number {
+    let total = 0;
+    this.pedidos.forEach((orden) => {
+      if (orden.ordenId === ordenId) {
+        orden.detallesOrden.forEach((detalle) => {
+          total = total + detalle.producto.precio;
+        });
+      }
+    });
+    return total;
+  }
 }

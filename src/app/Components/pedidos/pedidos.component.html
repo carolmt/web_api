@@ -13,18 +13,18 @@
     <tr>
       <td>
         <ul>
-          <li>{{ pedido.cliente.nom_cli }}</li>
-          <li>{{ pedido.cliente.telf }}</li>
+          <li class="lista">{{ pedido.cliente.nom_cli }}</li>
+          <li class="lista">{{ pedido.cliente.telf }}</li>
         </ul>
       </td>
       <td>
         <ul>
           @for (detalle of pedido.detallesOrden; track detalle.detalleId) {
-          <li>{{ detalle.producto.nomProd}}</li>
+          <li class="lista">{{ detalle.producto.nomProd}}</li>
           }
         </ul>
       </td>
-      <td>{{pedido.precioTotal}}</td>
+      <td>{{getTotalPrice(pedido.ordenId)}} €</td>
       <td>{{ dateFormatter(pedido.fechaorden) }}</td>
       <td>
         <div style="margin-bottom: 5px;">

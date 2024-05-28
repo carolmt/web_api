@@ -80,4 +80,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       color: black;
       background-color: #fff8ec;
   }
-  
+  .lista {
+    list-style:none;
+  }
