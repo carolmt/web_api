@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente, CreateOrder, DetallesOrden, Orden, OrdenDone } from '../../Interfaces/baseDatos.interface';
+import { createHeaders } from '../../Interceptors/headers.helper';
 
 const URL_BASE = 'http://localhost:8080/RestoServ/api'
 
@@ -19,17 +20,13 @@ export class RequestService {
 
   //obtener todas las categorias
   getAllCategories(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + "/categorias", { headers }).pipe(res => res);
   }
 
 //obtener categoria específica
   getSpecificCategory(nameCat: string ): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/categorias/' + nameCat, { headers }).pipe(res => res);
   }
 
@@ -37,9 +34,7 @@ export class RequestService {
 
   //Obtener producto específico
   getProduct(product:string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/categorias/' + product, { headers }).pipe(res => res);
   }
 
@@ -47,25 +42,19 @@ export class RequestService {
   
   //Obtener empleado por id
   getEmployeeById(empl_id : number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/empleados/' + empl_id, { headers }).pipe(res => res);
   }
 
   //Obtener empleado por codigo auth
   getEmployeeByCode(code : number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/empleados/codigo/' + code, { headers }).pipe(res => res);
   }
 
   //Obtener empleado por codigo y nombre
   getEmployeeByCodeAndName(code : number, name: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/empleados/codigo/' + code + '?' + name, { headers }).pipe(res => res);
   }
 
@@ -73,25 +62,19 @@ export class RequestService {
 
   //Obtener todas las órdenes.
   getAllOrders(): Observable<any>  {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/ordenes', { headers }).pipe(res => res);
   }
 
   //Obtener orden por id
   getORderById(ord_id: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
       return this.httpClient.get(URL_BASE + '/ordenes/'+ord_id, { headers }).pipe(res => res);
   }
 
   //Obtener ordenes no hechas
   getOrdersNotDone(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/ordenes/undone', { headers }).pipe(res => res);
   }
 
@@ -99,9 +82,7 @@ export class RequestService {
 
 //Obtener cliente mediante telf
   getClientByTelf(telf : number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.get(URL_BASE + '/clientes/' + telf, { headers }).pipe(res => res);
   }
 
@@ -112,27 +93,21 @@ export class RequestService {
 
   //Agregar detalle de orden
   postOrderDetail(detail : DetallesOrden) {
-    const headers = new HttpHeaders({
-       'Content-Type': 'application/json; charset=UTF-8',
-     });
+    const headers = createHeaders();
      return this.httpClient.post(URL_BASE + '/detalleOrdenes', detail, { headers }).pipe(res => res);
   }
 
                   //ORDENES
 //Agregar orden
   postNewOrder(order: CreateOrder): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    const headers = createHeaders();
     return this.httpClient.post(URL_BASE + '/ordenes/createOrder', order, { headers }).pipe(res => res);
   }
 
                 //CLIENTES
   //Crear cliente
     postNewClient(cliente: Cliente): Observable<any> {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
+      const headers = createHeaders();
       return this.httpClient.post(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
     }
 
@@ -140,16 +115,12 @@ export class RequestService {
 
     //Actualizar cliente
     putUpdateClient(cliente: Cliente): Observable<any> {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
+      const headers = createHeaders();
       return this.httpClient.put(URL_BASE + '/clientes', cliente, { headers }).pipe(res => res);
     }
     //Actualizar orden
     putUpdateOrder(ordenId: number, order: OrdenDone): Observable<any> {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
+      const headers = createHeaders();
       return this.httpClient.put(URL_BASE + '/ordenes/updateOrder/'+ordenId, order, { headers }).pipe(res => res);
     }
   
@@ -158,9 +129,7 @@ export class RequestService {
     //ORDENES
     //Eliminar orden por id
     deleteOrderById(ord_id: number): Observable<any> {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
+      const headers = createHeaders();
       return this.httpClient.delete(URL_BASE + '/ordenes/deleteOrder/'+ord_id, { headers }).pipe(res => res);
     }
 }
