@@ -1,6 +1,8 @@
 # PROYECTO FINAL DE CICLO DAM - SISTEMA DE PEDIDOS
 
-Este proyecto es una aplicación web desarrollada con Angular y TypeScript que consume una API REST. La API REST está creada con Spring Boot y se puede encontrar en el siguiente repositorio: [RestoServApi](https://github.com/carolmt/RestoServApi) (creada por mí misma).
+Este proyecto es una aplicación web desarrollada con Angular y TypeScript que consume una API REST. 
+La API REST está creada con Spring Boot y se puede encontrar en el siguiente repositorio:
+[RestoServApi](https://github.com/carolmt/RestoServApi) (creada por mí misma).
 
 ## Características
 
