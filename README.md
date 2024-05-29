@@ -26,11 +26,18 @@ Para instalar y ejecutar este proyecto localmente, necesitarás tener instalado 
 git clone https://github.com/carolmt/web_api.git
 
 2. Navega al directorio del proyecto:
+```bash
 cd web_api
+
 3. Instala las dependencias:
+```bash
 npm install
+
 4. Inicia la aplicación:
+```bash
 ng serve
+
+
 La aplicación ahora debería estar disponible en http://localhost:4200.
 
 ## Uso
