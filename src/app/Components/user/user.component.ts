@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
   unsplashClass(): any {
     return {
       'min-height': '100%',
-      background: `url("https://source.unsplash.com/random/1200x900?"${this.styleImage}) no-repeat center center`,
+      background: 'url("/assets/images/pizza.avif") no-repeat center center',
       'background-size': 'cover',
       position: 'relative',
     };

@@ -109,3 +109,8 @@ body { margin: 0; font-family: "Lucida Sans Unicode", "Lucida Grande", sans-seri
   .lista {
     list-style:none;
   }
+  .img-login {
+    min-height: 100%;
+    background-size: cover;
+    position: relative;
+  }
