@@ -39,21 +39,30 @@
     color: rgb(248, 170, 64); /* Cambia el color del enlace al pasar el mouse */
     text-decoration: underline; /* Añade subrayado al pasar el mouse si lo deseas */
 }
-    
 .boton-grande {
-    
-    color:rgb(248, 170, 64);
-  font-weight:700;
-  letter-spacing:1px;
-  border:none;
-  font-size:40px; /* Ajusta el tamaño del texto */
-    padding: 40px 60px; /* Ajusta el tamaño del botón, puedes modificar los valores para que se vea como deseas */
+    width: 250px;
+    height: 250px;
+    margin: 5px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    color: rgb(248, 170, 64);
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+    font-size: 20px; /* Ajusta el tamaño del texto */
+    padding: 20px; /* Ajusta el tamaño del botón, puedes modificar los valores para que se vea como deseas */
     margin: 15px; /* Espacio alrededor de cada botón */
-    transition:all .5s ease-in-out;
-    
+    transition: all .5s ease-in-out;
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    text-align: center; /* Centra el texto */
+    word-break: break-word; /* Permite el ajuste de palabras largas */
+    line-height: 1.2; /* Ajusta la altura de línea para que el texto no se vea muy apretado */
 }
 .boton-grande:hover {
-    background-color:rgb(248, 170, 64);
+    background-color: rgb(248, 170, 64);
     color: rgb(13, 13, 13);
 }
 /* Clase para agregar un margen entre los botones */
@@ -70,7 +79,7 @@
     display: flex;
     flex-wrap: wrap; /* Permite que los botones pasen a la siguiente línea si no caben en una */
     gap: 10px; /* Espacio entre los botones */
-    justify-content: flex-start; /* Alinea los botones al inicio */
+    justify-content: center; /* Alinea los botones al centro */
 }
 
 html, body { height: 100%; }
