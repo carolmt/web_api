@@ -53,7 +53,7 @@ Para iniciar sesión, introduce tu código de empleado y tu nombre. Una vez aute
 Este proyecto está bajo la licencia MIT.
 
 
-# APLICACIÓN WEB RESTO SERV 
+# APLICACIÓN WEB RESTO SERVE 
 
 ## LOGIN
 
